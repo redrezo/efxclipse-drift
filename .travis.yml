@@ -8,30 +8,34 @@ jobs:
       name: "Windows MSVC Natives"
       os: windows
       language: cpp
-      script: echo "Building Windows MSVC Natives"
-      script: cmake --version
-      script: mkdir build
-      script: cd build
-      script: cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native
-      script: ls -al
+      script: 
+        - echo "Building Windows MSVC Natives"
+        - cmake --version
+        - mkdir build
+        - cd build
+        - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native
+        - ls -al
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
-      script: echo "Building MacOS GCC Natives"
-      script: cmake --version
-      script: mkdir build
-      script: cd build
-      script: cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
+      script: 
+        - echo "Building MacOS GCC Natives"
+        - cmake --version
+        - mkdir build
+        - cd build
+        - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
-      script: echo "Building Linux GCC Natives"
-      script: cmake --version
-      script: cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
-      script: ls -al
+      script:
+        - echo "Building Linux GCC Natives"
+        - cmake --version
+        - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
+        - ls -al
     - stage: build-java
       name: "Java Build"
       os: linux
       language: java
-      script: echo "executing Maven"
-      script: mvn --version
+      script: 
+        - echo "executing Maven"
+        - mvn --version
