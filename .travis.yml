@@ -19,11 +19,16 @@ jobs:
       language: cpp
       script: echo "Building MacOS GCC Natives"
       script: cmake --version
+      script: mkdir build
+      script: cd build
+      script: cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
       script: echo "Building Linux GCC Natives"
       script: cmake --version
+      script: cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native
+      script: ls -al
     - stage: build-java
       name: "Java Build"
       os: linux
