@@ -12,6 +12,7 @@ jobs:
         - choco install jdk8
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
+        - pip install cmake
       script: 
         - echo "Building Windows MSVC Natives"
         - cmake --version
@@ -23,6 +24,8 @@ jobs:
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
+      before_script:
+        - pip install cmake
       script: 
         - echo "Building MacOS GCC Natives"
         - cmake --version
@@ -33,6 +36,8 @@ jobs:
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
+      before_script:
+        - pip install cmake
       script:
         - echo "Building Linux GCC Natives"
         - cmake --version
