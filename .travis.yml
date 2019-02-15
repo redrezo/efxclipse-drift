@@ -17,6 +17,7 @@ jobs:
         - cd build
         - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - ls -al
+        - msbuild releng.sln
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
@@ -26,6 +27,7 @@ jobs:
         - mkdir build
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
+        - make
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
@@ -36,6 +38,7 @@ jobs:
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - ls -al
+        - make
     - stage: build-java
       name: "Java Build"
       os: linux
