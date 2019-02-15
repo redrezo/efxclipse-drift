@@ -24,8 +24,14 @@ jobs:
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
-      before_script:
-        - pip install cmake
+      install:
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+        - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
+        - tar -xvf cmake-3.13.0-Darwin-x86_64.tar.gz > /dev/null
+        - mv cmake-3.13.0-Darwin-x86_64 cmake-install
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        - cd ${TRAVIS_BUILD_DIR}
       script: 
         - echo "Building MacOS GCC Natives"
         - cmake --version
@@ -42,7 +48,6 @@ jobs:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
         - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-Linux-x86_64.tar.gz
-          # - echo "*cmake-3.13.0-Linux-x86_64.tar.gz" > cmake_md5.txt
         - tar -xvf cmake-3.13.0-Linux-x86_64.tar.gz > /dev/null
         - mv cmake-3.13.0-Linux-x86_64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
