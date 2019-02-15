@@ -16,11 +16,9 @@ jobs:
         - mv cmake-3.13.0-win64-x64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
-      before_script:
         - choco install jdk8
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
-        - pip install cmake
       script: 
         - echo "Building Windows MSVC Natives"
         - cmake --version
@@ -38,9 +36,7 @@ jobs:
         - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
         - tar -xvf cmake-3.13.0-Darwin-x86_64.tar.gz > /dev/null
         - mv cmake-3.13.0-Darwin-x86_64 cmake-install
-        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
-        - ls -al ${DEPS_DIR}/cmake-install/bin
-        - ${DEPS_DIR}/cmake-install/bin/cmake --version
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/CMake.app/Contents/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
       script: 
         - echo "Building MacOS GCC Natives"
