@@ -9,16 +9,20 @@ jobs:
       os: windows
       language: cpp
       script: echo "Building Windows MSVC Natives"
+      script: cmake --version
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
       script: echo "Building MacOS GCC Natives"
+      script: cmake --version
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
       script: echo "Building Linux GCC Natives"
+      script: cmake --version
     - stage: build-java
       name: "Java Build"
       os: linux
       language: java
       script: echo "executing Maven"
+      script: mvn --version
