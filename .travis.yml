@@ -36,8 +36,20 @@ jobs:
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
+      compiler:
+        - gcc
+      install:
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir ${DEPS_DIR} && ${DEPS_DIR}
+        - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-Linux-x86_64.tar.gz
+          # - echo "*cmake-3.13.0-Linux-x86_64.tar.gz" > cmake_md5.txt
+        - tar -xvf cmake-3.13.0-Linux-x86_64.tar.gz > /dev/null
+        - mv cmake-3.13.0-Linux-x86_64 cmake-install
+        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+        - cd ${TRAVIS_BUILD_DIR}
+
       before_script:
-        - pip install cmake
+              #   - pip install cmake
       script:
         - echo "Building Linux GCC Natives"
         - cmake --version
