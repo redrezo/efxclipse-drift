@@ -10,6 +10,8 @@ jobs:
       language: cpp
       before_script:
         - choco install jdk8
+        - choco install visualstudio2017buildtools
+        - choco install visualstudio2017-workload-vctools
       script: 
         - echo "Building Windows MSVC Natives"
         - cmake --version
