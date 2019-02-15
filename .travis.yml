@@ -7,14 +7,18 @@ jobs:
     - stage: build-natives
       name: "Windows MSVC Natives"
       os: windows
+      language: cpp
       script: echo "Building Windows MSVC Natives"
     - name: "MacOS GCC Natives"
       os: osx
+      language: cpp
       script: echo "Building MacOS GCC Natives"
     - name: "Linux GCC Natives"
       os: linux
+      language: cpp
       script: echo "Building Linux GCC Natives"
     - stage: build-java
       name: "Java Build"
       os: linux
+      language: java
       script: echo "executing Maven"
