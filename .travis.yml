@@ -8,6 +8,8 @@ jobs:
       name: "Windows MSVC Natives"
       os: windows
       language: cpp
+      before_script:
+        - choco install jdk8
       script: 
         - echo "Building Windows MSVC Natives"
         - cmake --version
