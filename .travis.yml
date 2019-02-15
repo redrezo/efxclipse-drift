@@ -11,9 +11,9 @@ jobs:
       install:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-        - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-win32-x64.zip
-        - unzip cmake-3.13.0-win32-x64.zip > /dev/null
-        - mv cmake-3.13.0-win32-x64 cmake-install
+        - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-win64-x64.zip
+        - unzip cmake-3.13.0-win64-x64.zip > /dev/null
+        - mv cmake-3.13.0-win64-x64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
       before_script:
