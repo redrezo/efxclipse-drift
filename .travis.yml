@@ -10,6 +10,10 @@ jobs:
       language: cpp
       script: echo "Building Windows MSVC Natives"
       script: cmake --version
+      script: mkdir build
+      script: cd build
+      script: cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native
+      script: ls -al
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
