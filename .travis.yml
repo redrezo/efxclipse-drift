@@ -1,0 +1,20 @@
+stages:
+  - build-natives
+  - build-java
+
+jobs:
+  include:
+    - stage: build-natives
+      name: "Windows MSVC Natives"
+      os: windows
+      script: echo "Building Windows MSVC Natives"
+    - name: "MacOS GCC Natives"
+      os: osx
+      script: echo "Building MacOS GCC Natives"
+    - name: "Linux GCC Natives"
+      os: linux
+      script: echo "Building Linux GCC Natives"
+    - stage: build-java
+      name: "Java Build"
+      os: linux
+      script: echo "executing Maven"
