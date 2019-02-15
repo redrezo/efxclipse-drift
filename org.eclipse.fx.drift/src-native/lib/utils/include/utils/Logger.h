@@ -24,6 +24,10 @@ std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
 
 #define WITH_LOGGING 0
 
+#ifndef __PRETTY_FUNCTION__
+  #define __PRETTY_FUNCTION__ __FUNCTION__
+#endif
+
 #ifdef WITH_LOGGING
 
 #define LogDebug(msg) Log(Debug, __FILE__, __LINE__, __PRETTY_FUNCTION__) << msg << std::endl;

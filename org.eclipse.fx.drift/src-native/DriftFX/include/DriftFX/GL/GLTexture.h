@@ -12,6 +12,8 @@
 #ifndef DRIFTFX_GL_GLTEXTURE_H_
 #define DRIFTFX_GL_GLTEXTURE_H_
 
+#include <DriftFX/Common.h>
+
 #include <GL/glew.h>
 
 #include <DriftFX/Texture.h>
@@ -20,7 +22,7 @@
 namespace driftfx {
 namespace gl {
 
-class GLTexture : public Texture {
+class DRIFT_API GLTexture : public Texture {
 
 public:
 	GLTexture(GLContext *context, int width, int height);

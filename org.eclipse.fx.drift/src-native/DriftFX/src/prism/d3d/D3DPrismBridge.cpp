@@ -72,7 +72,7 @@ int D3DPrismBridge::RecreateFXTexture(void* fxTexture, HANDLE shareHandle) {
 	int w = d3dResource->desc.Width;
 	int h = d3dResource->desc.Height;
 
-	WERR();
+	WERR(;);
 
 	LogDebug("CreateTexture( " << w << ", " << h << ", 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, " << pTexture << ", " << sh << " )")
 	HRESULT res = jfxContext->Device()->CreateTexture(

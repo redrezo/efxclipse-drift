@@ -11,9 +11,11 @@
 #ifndef DRIFTFX_RENDERTARGET_H_
 #define DRIFTFX_RENDERTARGET_H_
 
+#include <DriftFX/Common.h>
+
 namespace driftfx {
 
-class RenderTarget {
+class DRIFT_API RenderTarget {
 
 public:
 	virtual unsigned int GetWidth() = 0;

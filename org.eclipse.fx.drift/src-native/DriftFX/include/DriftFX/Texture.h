@@ -12,9 +12,11 @@
 #ifndef DRIFTFX_TEXTURE_H_
 #define DRIFTFX_TEXTURE_H_
 
+#include <DriftFX/Common.h>
+
 namespace driftfx {
 
-class Texture {
+class DRIFT_API Texture {
 
 public:
 	virtual ~Texture();

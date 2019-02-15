@@ -11,6 +11,8 @@
 #ifndef DRIFTFX_DRIFTFXSURFACE_H_
 #define DRIFTFX_DRIFTFXSURFACE_H_
 
+#include <DriftFX/Common.h>
+
 #include <DriftFX/RenderTarget.h>
 
 #include <DriftFX/Context.h>
@@ -18,12 +20,12 @@
 
 namespace driftfx {
 
-enum PresentationHint {
+enum DRIFT_API PresentationHint {
 	CENTER
 };
 
 
-class DriftFXSurface {
+class DRIFT_API DriftFXSurface {
 
 public:
 	/*

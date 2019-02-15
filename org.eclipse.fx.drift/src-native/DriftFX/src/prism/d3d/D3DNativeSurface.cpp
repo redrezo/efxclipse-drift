@@ -15,6 +15,7 @@
 #include "D3DNativeSurface.h"
 
 using namespace driftfx;
+using namespace driftfx::internal;
 using namespace driftfx::internal::win32;
 using namespace driftfx::internal::prism::d3d;
 

@@ -11,11 +11,13 @@
 #ifndef DRIFTFX_DRIFTFX_H_
 #define DRIFTFX_DRIFTFX_H_
 
+#include <DriftFX/Common.h>
+
 #include <DriftFX/DriftFXSurface.h>
 
 namespace driftfx {
 
-class DriftFX {
+class DRIFT_API DriftFX {
 
 public:
 	static DriftFX* Get();

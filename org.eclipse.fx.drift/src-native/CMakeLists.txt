@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.12)
 
 project(releng)
 
@@ -6,11 +6,15 @@ if (UNIX AND NOT APPLE)
 	set(LINUX TRUE)
 endif ()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	set(MSVC TRUE)
+endif ()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
 if (WIN32)
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,$$ORIGIN -Wl,--export-all-symbols -static-libgcc -static-libstdc++ -static -lpthread")
+#set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,$$ORIGIN -Wl,--export-all-symbols -static-libgcc -static-libstdc++ -static -lpthread")
 endif (WIN32)
 
 if (APPLE)
@@ -24,7 +28,6 @@ if (APPLE)
   add_compile_definitions(GL_SILENCE_DEPRECATION)
 endif (APPLE)
 
-add_compile_definitions(GLEW_STATIC)
 
 # JNI
 # TODO improve this (look for jdk8 JNI)
@@ -76,6 +79,23 @@ list(APPEND LinkLibraries "-framework IOSurface")
 list(APPEND LinkLibraries "-framework CoreFoundation")
 endif (APPLE)
 
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+
+include_directories(${DRIECTX_INCLUDE_DIRS})
+
+add_library(driftfx SHARED 
+	$<TARGET_OBJECTS:DriftFX-OBJ> 
+	$<TARGET_OBJECTS:Utils-OBJ> 
+	$<TARGET_OBJECTS:Glew-OBJ>)
+#target_compile_definitions(driftfx PRIVATE GLEW_BUILD) # TODO verify if we need this
+#target_compile_definitions(driftfx PUBLIC GLEW_STATIC)
+
+target_link_libraries(driftfx PRIVATE ${OPENGL_LIBRARIES} ${DIRECTX9_LIBRARIES})
+
+
+else ()
+
 add_library(driftfx SHARED DriftFX/src/null.cpp)
 
 if (WIN32)
@@ -122,12 +142,14 @@ if (LINUX)
 endif (LINUX)
 
 
+endif ()
 
-add_custom_command(TARGET driftfx POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-		"$<TARGET_FILE:driftfx>"
-		"${PROJECT_SOURCE_DIR}/../native/${LIB_NAME}")
-		
+
+#add_custom_command(TARGET driftfx POST_BUILD
+#	COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#		"$<TARGET_FILE:driftfx>"
+#		"${PROJECT_SOURCE_DIR}/../native/${LIB_NAME}")
+#		
 		
 add_custom_target(debug
 	COMMAND ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE=Debug ${CMAKE_SOURCE_DIR}

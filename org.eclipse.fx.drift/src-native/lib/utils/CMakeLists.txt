@@ -1,18 +1,21 @@
 cmake_minimum_required(VERSION 3.1)
 project(utils CXX)
 
+# configuring msvc to include the runtime
+if (WIN32)
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+endif (WIN32)
+
 set(TARGET              utils)
 set(PUBLIC_HDR_DIR      include)
 
-if (LINUX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-endif()
 
 # public headers are always in include/${TARGET}/
-file(GLOB_RECURSE PUBLIC_HDRS ${PUBLIC_HDR_DIR}/${TARGET}/*.h)
+file(GLOB_RECURSE Utils-Headers ${PUBLIC_HDR_DIR}/${TARGET}/*.h)
 
 # list each source file individually
-set(SRCS
+set(Utils-Sources
     src/JNIHelper.cpp
     src/Logger.cpp
 )
@@ -20,16 +23,7 @@ set(SRCS
 # specify where our headers are
 include_directories(${PUBLIC_HDR_DIR})
 
-# we're building a library
-add_library(${TARGET} STATIC ${PUBLIC_HDRS} ${SRCS})
-
-# specify where the public headers of this library are
-target_include_directories(${TARGET} PUBLIC ${PUBLIC_HDR_DIR})
-
-if (WIN32)
-    target_link_libraries(${TARGET} PRIVATE opengl32 gdi32)
-endif()
-
-install(TARGETS ${TARGET} ARCHIVE DESTINATION lib/${DIST_DIR})
-
-
+# add object target
+add_library(Utils-OBJ OBJECT ${Utils-Headers} ${Utils-Sources})
+target_include_directories(Utils-OBJ PUBLIC include)
+set_property(TARGET Utils-OBJ PROPERTY POSITION_INDEPENDENT_CODE ON)
