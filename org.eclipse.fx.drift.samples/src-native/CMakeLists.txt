@@ -23,7 +23,7 @@ find_package(OpenGL REQUIRED)
 
 if (WIN32)
 set(DRIFTFX_LIBRARIES 
-	"${CMAKE_SOURCE_DIR}/../../org.eclipse.fx.drift/native/driftfx.dll")
+	"${CMAKE_SOURCE_DIR}/../../org.eclipse.fx.drift/native/driftfx.lib")
 endif (WIN32)
 
 if (LINUX)
@@ -49,7 +49,10 @@ list(APPEND SourcesList SimpleTriangleRenderer)
 
 
 # we're building a library
-add_library(samples SHARED ${SourcesList})
+add_library(samples SHARED ${SourcesList} 
+"../org.eclipse.fx.drift.msvc/lib/glew/Glew-OBJ.dir/Debug/glew.obj"
+"../org.eclipse.fx.drift.msvc/lib/utils/Utils-OBJ.dir/Debug/Logger.obj"
+"../org.eclipse.fx.drift.msvc/lib/utils/Utils-OBJ.dir/Debug/JNIHelper.obj")
 
 target_link_libraries(samples ${DRIFTFX_LIBRARIES} ${OPENGL_LIBRARIES})
 

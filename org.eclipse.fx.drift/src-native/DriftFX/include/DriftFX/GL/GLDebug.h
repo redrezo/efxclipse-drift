@@ -18,6 +18,8 @@
 #include <iomanip>
 #include <string>
 
+#include <DriftFX/Common.h>
+
 #include <utils/Logger.h>
 
 namespace driftfx {
@@ -29,7 +31,7 @@ namespace gl {
 
 #define GLERR(code) code; { GLuint err = glGetError(); if (err != 0) LogError("GL Error: 0x" << std::hex << err << " " << driftfx::gl::TranslateGLError(err) << " ( " << #code << " )" ); }
 
-std::string TranslateGLError(GLuint err);
+DRIFT_API std::string TranslateGLError(GLuint err);
 
 }
 }

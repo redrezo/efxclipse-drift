@@ -9,6 +9,7 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
+
 #include <jni.h>
 
 #include <iostream>
@@ -24,7 +25,7 @@ using namespace std;
 #include <utils/JNIHelper.h>
 
 JavaVM* JNIHelper::jvm = nullptr;
-thread_local JNIEnv* JNIHelper::jniEnv;
+thread_local JNIEnv* jniEnv;
 
 void JNIHelper::Initialize(JavaVM* jvm) {
 	LogDebug("jvm = " << jvm)

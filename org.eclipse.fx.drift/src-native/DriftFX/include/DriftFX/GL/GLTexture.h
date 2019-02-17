@@ -14,7 +14,9 @@
 
 #include <DriftFX/Common.h>
 
-#include <GL/glew.h>
+//#include <GL/glew.h>
+// gl stuff
+typedef unsigned int GLuint;
 
 #include <DriftFX/Texture.h>
 #include <DriftFX/GL/GLContext.h>

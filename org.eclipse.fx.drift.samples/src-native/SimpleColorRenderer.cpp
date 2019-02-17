@@ -96,16 +96,16 @@ public:
 		float red; float green; float blue;
 		interpolate(pow, red0, green0, blue0, red1, green1, blue1, red, green, blue);
 
-		GLERR( glBindFramebuffer(GL_FRAMEBUFFER, fb); );
-		GLERR( glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureId, 0); );
+		glBindFramebuffer(GL_FRAMEBUFFER, fb);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureId, 0);
 
 		checkFramebuffer();
 
-		GLERR( glClearColor(red, green, blue, 1); );
-		GLERR( glClear(GL_COLOR_BUFFER_BIT); );
-		GLERR( glFlush(); );
+		glClearColor(red, green, blue, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		glFlush();
 
-		GLERR( glBindFramebuffer(GL_FRAMEBUFFER, 0); );
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void checkFramebuffer() {
@@ -181,6 +181,9 @@ private:
 };
 
 extern "C" JNIEXPORT void JNICALL Java_org_eclipse_fx_drift_samples_SimpleColorRenderer_nRun(JNIEnv *env, jclass cls, jobject renderer) {
+	JavaVM* vm;
+	env->GetJavaVM(&vm);
+	JNIHelper::Initialize(vm);
 	SimpleColorRenderer* nativeRenderer = new SimpleColorRenderer(renderer);
 	nativeRenderer->run();
 	delete nativeRenderer;

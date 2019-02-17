@@ -234,7 +234,7 @@ public:
 
 
 		// vertex array
-		GLERR( glGenVertexArrays(1, &vaID); );
+		glGenVertexArrays(1, &vaID);
 
 		static const Vertex data2[] = {
 			{  0.0f,   0.5f, 0.0f, {0.0f, 0.0f, 1.0f} },
@@ -243,31 +243,31 @@ public:
 		};
 
 		GLuint vboID;
-		GLERR( glGenBuffers(1, &vboID); );
-		GLERR( glBindBuffer(GL_ARRAY_BUFFER, vboID); );
-		GLERR( glBufferData(GL_ARRAY_BUFFER, sizeof(data2), data2, GL_STATIC_DRAW); );
-		GLERR( glBindBuffer(GL_ARRAY_BUFFER, 0); );
+		glGenBuffers(1, &vboID);
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(data2), data2, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		// build va
-		GLERR( glBindVertexArray(vaID); );
+		glBindVertexArray(vaID);
 
-		GLERR( glBindBuffer(GL_ARRAY_BUFFER, vboID); );
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-		GLERR( glEnableVertexAttribArray(0); );
-		GLERR( glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0 ); );
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0 );
 
-		GLERR( glEnableVertexAttribArray(1); );
-		GLERR( glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (3 * sizeof(GLfloat)) ); );
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (3 * sizeof(GLfloat)) );
 
-		GLERR( glBindVertexArray(0); );
-
-
-//		GLERR( glDisableVertexAttribArray(0); );
-//		GLERR( glDisableVertexAttribArray(1); );
+		glBindVertexArray(0);
 
 
+//		glDisableVertexAttribArray(0);
+//		glDisableVertexAttribArray(1);
 
-		GLERR();
+
+
+		//GLERR();
 		LogDebug("prepare done");
 
 
@@ -291,8 +291,8 @@ public:
 
 	void renderFrame(GLuint textureId, int width, int height) {
 
-		GLERR( glBindFramebuffer(GL_FRAMEBUFFER, fb); );
-		GLERR( glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureId, 0); );
+		glBindFramebuffer(GL_FRAMEBUFFER, fb);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, textureId, 0);
 
 		checkFramebuffer();
 
@@ -301,25 +301,25 @@ public:
 		angle += 0.1;
 
 
-		GLERR( glViewport(0, 0, width, height); );
+		glViewport(0, 0, width, height);
 
-		GLERR( glClearColor(0.0f, 0.0f, 0.0f, 0.0f); );
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-		GLERR( glClear(GL_COLOR_BUFFER_BIT); );
+		glClear(GL_COLOR_BUFFER_BIT);
 
-		GLERR( glUseProgram(program); );
-		GLERR( glUniform1f(rotID, angle); );
+		glUseProgram(program);
+		glUniform1f(rotID, angle);
 
 		// render
-		GLERR( glBindVertexArray(vaID); );
-		GLERR( glDrawArrays(GL_TRIANGLES, 0, 3); );
-		GLERR( glBindVertexArray(0); );
+		glBindVertexArray(vaID);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(0);
 
 
-		GLERR( glFlush(); );
+		glFlush();
 
 
-		GLERR( glBindFramebuffer(GL_FRAMEBUFFER, 0); );
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void checkFramebuffer() {
@@ -389,6 +389,9 @@ private:
 };
 
 extern "C" JNIEXPORT void JNICALL Java_org_eclipse_fx_drift_samples_SimpleTriangleRenderer_nRun(JNIEnv *env, jclass cls, jobject renderer) {
+	JavaVM* vm;
+	env->GetJavaVM(&vm);
+	JNIHelper::Initialize(vm);
 	SimpleTriangleRenderer* nativeRenderer = new SimpleTriangleRenderer(renderer);
 	nativeRenderer->run();
 	delete nativeRenderer;

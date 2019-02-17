@@ -17,10 +17,10 @@
 #include <ostream>
 #include <string>
 
-enum LogLevel { Debug, Error, Info };
+enum __declspec(dllexport) LogLevel { Debug, Error, Info };
 
-std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
-std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
+__declspec(dllexport) std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
+__declspec(dllexport) std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
 
 #define WITH_LOGGING 0
 

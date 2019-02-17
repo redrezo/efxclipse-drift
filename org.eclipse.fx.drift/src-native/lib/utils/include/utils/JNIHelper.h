@@ -13,7 +13,8 @@
 
 #include <jni.h>
 
-class JNIHelper {
+
+class __declspec( dllexport ) JNIHelper {
 
 public:
 	static void Initialize(JavaVM* jvm);
@@ -26,8 +27,7 @@ public:
 
 private:
 	static JavaVM* jvm;
-	static thread_local JNIEnv* jniEnv;
-
+	
 };
 
 

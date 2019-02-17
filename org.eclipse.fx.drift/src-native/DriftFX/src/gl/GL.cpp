@@ -9,6 +9,8 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
+#include <DriftFX/Common.h>
+
 #include <GL/glew.h>
 
 #include <string>
@@ -17,7 +19,7 @@
 
 using namespace std;
 
-string driftfx::gl::TranslateGLError(GLuint err) {
+DRIFT_API string driftfx::gl::TranslateGLError(GLuint err) {
 	switch (err) {
 	case GL_NO_ERROR: break;
 	case GL_INVALID_FRAMEBUFFER_OPERATION: return "GL_INVALID_FRAMEBUFFER_OPERATION";
