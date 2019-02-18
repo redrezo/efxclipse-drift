@@ -11,6 +11,7 @@
 #ifndef SHAREDSURFACE_WIN32_WGLCONTEXT_H_
 #define SHAREDSURFACE_WIN32_WGLCONTEXT_H_
 
+#include <Windows.h>
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
