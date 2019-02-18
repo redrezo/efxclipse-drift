@@ -19,9 +19,12 @@ jobs:
         - choco install jdk8
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
+        - choco install visualstudio2017-workload-nativedesktop
+        - PATH="C:\Program Files (x86)}\Microsoft Visual Studio\2017\BUildTools\MSBuild\15.0\Bin":$PATH
       script: 
         - echo "Building Windows MSVC Natives"
         - cmake --version
+        - msbuild -version
         - mkdir build
         - cd build
         - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
