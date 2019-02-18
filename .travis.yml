@@ -16,15 +16,15 @@ jobs:
         - mv cmake-3.13.0-win64-x64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
-          #        - choco install jdk8
+        - choco install jdk8
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-        - PATH="C:\Program Files (x86)}\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin":$PATH
+        - PATH="C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin":$PATH
       script: 
         - echo "Building Windows MSVC Natives"
-        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
-        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild"
+          #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
+          #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild"
         - cmake --version
         - msbuild -version
         - mkdir build
