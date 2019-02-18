@@ -14,11 +14,12 @@ jobs:
               #- /c/Program Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/BuildTools/Bin/MSBuild.exe -version
           #- /c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin/MSBuild.exe -version
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin"
-        - ls -la ${MSBUILDPATH}
+        - ls -la "${MSBUILDPATH}"
         - MSBUILD="${MSBUILDPATH}/MSBuild.exe"
-        - ${MSBUILD} -version
+        - "${MSBUILD}" -version
         - PATH=$MSBUILDPATH:$PATH
         - echo $PATH
+        - MSBuild -version
         - msbuild -version
     - stage: build-natives
       name: "Windows MSVC Natives"
