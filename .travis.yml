@@ -11,9 +11,7 @@ jobs:
       install:
         - choco install visualstudio2017buildtools
       script:
-              #- /c/Program Files\ \(x86\)/Microsoft\ Visual\ Studio/2017/BuildTools/Bin/MSBuild.exe -version
-          #- /c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin/MSBuild.exe -version
-        - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin"
+        - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
         - ls -la "${MSBUILDPATH}"
         - MSBUILD="${MSBUILDPATH}/MSBuild.exe"
         - "${MSBUILD} -version"
