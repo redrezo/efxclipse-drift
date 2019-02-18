@@ -16,7 +16,7 @@ jobs:
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin"
         - ls -la "${MSBUILDPATH}"
         - MSBUILD="${MSBUILDPATH}/MSBuild.exe"
-        - "${MSBUILD}" -version
+        - "${MSBUILD} -version"
         - PATH=$MSBUILDPATH:$PATH
         - echo $PATH
         - MSBuild -version
@@ -99,3 +99,4 @@ jobs:
       script: 
         - echo "executing Maven"
         - mvn --version
+
