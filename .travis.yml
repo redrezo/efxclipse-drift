@@ -25,10 +25,7 @@ jobs:
         - echo "Building Windows MSVC Natives"
           #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
           #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild"
-        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
-        - cd "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
         - MSBuild.exe -version
-        - ./MSBuild.exe -version
         - cmake --version
         - msbuild -version
         - mkdir build
