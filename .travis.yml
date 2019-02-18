@@ -33,19 +33,17 @@ jobs:
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-        - PATH="C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin":$PATH
       script: 
         - echo "Building Windows MSVC Natives"
-          #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools"
-          #        - ls -al "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild"
+        - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
+        - PATH=$MSBUILDPATH:$PATH
         - MSBuild.exe -version
         - cmake --version
-        - msbuild -version
         - mkdir build
         - cd build
         - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - ls -al
-        - msbuild releng.sln
+        - MSBuild.exe releng.sln
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
