@@ -40,16 +40,26 @@ message("JNI: " ${JNI_LIBRARIES})
 find_package(OpenGL REQUIRED)
 
 if (WIN32)
-	# DirectX
-	# TODO improve this
-	set(DIRECTX_INCLUDE_DIRS 
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include")
-	set(DIRECTX9_LIBRARIES 
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3d9.lib"
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3dx9.lib"
-		)
-endif (WIN32)
+	list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+	find_package(WindowsSDK REQUIRED)
+	get_windowssdk_include_dirs(${WINDOWSSDK_LATEST_DIR} WINSDK_INCLUDE_DIRS)
+	get_windowssdk_library_dirs(${WINDOWSSDK_LATEST_DIR} WINSDK_LIBRARY_DIRS)
+
+	message("WinSDK include: ${WINSDK_INCLUDE_DIRS}")
+	message("WinSDK lib: ${WINSDK_LIBRARY_DIRS}")
+	find_path(DIRECTX_INCLUDE_DIRS
+		NAMES d3d9.h
+		HINTS ${WINSDK_INCLUDE_DIRS})
+
+	message ("DirectX Include: ${DIRECTX_INCLUDE_DIRS}")
+
+	find_library(DIRECTX9_LIBRARIES
+		NAMES d3d9
+		PATHS ${WINSDK_LIBRARY_DIRS})
+
+	message ("DirectX9 Lib: ${DIRECTX9_LIBRARIES}")
+endif (WIN32)
 
 include_directories(${JNI_INCLUDE_DIRS})
 
@@ -79,7 +89,11 @@ list(APPEND LinkLibraries "-framework IOSurface")
 list(APPEND LinkLibraries "-framework CoreFoundation")
 endif (APPLE)
 
-
+# configuring msvc to include the runtime
+if (WIN32)
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /VERBOSE:LIB")
+endif (WIN32)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
 include_directories(${DRIECTX_INCLUDE_DIRS})

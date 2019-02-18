@@ -86,16 +86,6 @@ endif (APPLE)
 include_directories(include)
 include_directories(src)
 
-if (WIN32)
-	set(DIRECTX_INCLUDE_DIRS 
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include")
-	set(DIRECTX9_LIBRARIES 
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3d9.lib"
-		"C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Lib/x64/d3dx9.lib"
-		)
-#	include_directories(${DIRECTX_INCLUDE_DIRS})
-endif (WIN32)
-
 add_library(DriftFX-OBJ OBJECT ${DriftFX-Headers} ${DriftFX-Sources})
 target_include_directories(DriftFX-OBJ PUBLIC include)
 set_property(TARGET DriftFX-OBJ PROPERTY POSITION_INDEPENDENT_CODE ON)

@@ -9,9 +9,9 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
-#include <DriftFX/Common.h>
-
 #include <GL/glew.h>
+
+#include <DriftFX/Common.h>
 
 #include <string>
 

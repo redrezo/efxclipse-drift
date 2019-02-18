@@ -46,8 +46,8 @@ std::string filename(std::string file) {
 		file.end() );
 }
 
-std::string cut(std::string str, int size) {
-	int len = str.length();
+std::string cut(std::string str, size_t size) {
+	size_t len = str.length();
 	if (len < size) return str;
 	else return str.substr(len-size, size);
 }

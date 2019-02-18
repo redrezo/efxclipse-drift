@@ -48,11 +48,11 @@ extern "C" JNIEXPORT jlong JNICALL Java_org_eclipse_fx_drift_internal_NativeAPI_
 
 extern "C" JNIEXPORT void JNICALL Java_org_eclipse_fx_drift_internal_NativeAPI_nDestroyNativeSurface(JNIEnv *env, jclass cls, jlong surfaceId) {
 	LogDebug("nDestroyNativeSurface")
-	NativeSurfaceRegistry::Get()->Destroy(surfaceId);
+	NativeSurfaceRegistry::Get()->Destroy((long) surfaceId);
 }
 
 extern "C" JNIEXPORT void JNICALL Java_org_eclipse_fx_drift_internal_NativeAPI_nUpdateSize(JNIEnv *env, jclass cls, jlong surfaceId, jint width, jint height) {
-	NativeSurface* surface = NativeSurfaceRegistry::Get()->Get(surfaceId);
+	NativeSurface* surface = NativeSurfaceRegistry::Get()->Get((long) surfaceId);
 	surface->UpdateSize((int) width, (int) height);
 }
 

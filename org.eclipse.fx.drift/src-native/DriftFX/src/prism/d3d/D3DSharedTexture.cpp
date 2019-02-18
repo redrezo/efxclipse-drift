@@ -9,12 +9,13 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
+#include <GL/glew.h>
+#include <GL/wglew.h>
+
 #include "D3DSharedTexture.h"
 
 #include <utils/Logger.h>
 
-#include <GL/glew.h>
-#include <GL/wglew.h>
 
 #include "SharedTexture.h"
 #include "win32/Error.h"
@@ -160,7 +161,7 @@ bool D3DSharedTexture::Unlock() {
 
 FrameData* D3DSharedTexture::CreateFrameData() {
 	FrameData* data = new FrameData();
-	data->d3dSharedHandle = (long long) d3dTexture->GetShareHandle();
+	data->d3dSharedHandle = (long) (long long) d3dTexture->GetShareHandle();
 	data->height = GetHeight();
 	data->width = GetWidth();
 	return data;

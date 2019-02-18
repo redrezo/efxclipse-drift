@@ -9,8 +9,8 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
-#include "../Common.h"
 #include <GL/glew.h>
+#include "../Common.h"
 #include <iomanip>
 
 #include <DriftFX/GL/GLTexture.h>

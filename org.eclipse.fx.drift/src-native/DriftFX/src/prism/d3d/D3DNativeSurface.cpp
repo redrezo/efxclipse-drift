@@ -8,7 +8,7 @@
  * Contributors:
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
-
+#include <gl/glew.h>
 #include <utils/Logger.h>
 
 #include "win32/D3D9ExContext.h"

@@ -9,9 +9,9 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
-#include "InternalGLContext.h"
-
 #include <GL/glew.h>
+
+#include "InternalGLContext.h"
 
 #include <iostream>
 using namespace std;
