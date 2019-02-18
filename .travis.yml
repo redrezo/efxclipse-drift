@@ -5,6 +5,21 @@ stages:
 jobs:
   include:
     - stage: build-natives
+      name: "invoke msbuild"
+      os: windows
+      language: cpp
+      install:
+        - choco install visualstudio2017buildtools
+      script:
+        - "/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin/MSBuild.exe" -version
+        - /c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Bin/MSBuild.exe -version
+        - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild.exe"
+        - MSBUILD=${MSBUILDPATH}/MSBuild.exe
+        - $MSBUILD -version
+        - PATH=$MSBUILDPATH:$PATH
+        - msbuild -version
+
+    - stage: build-natives
       name: "Windows MSVC Natives"
       os: windows
       language: cpp
