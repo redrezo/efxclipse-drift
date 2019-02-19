@@ -21,7 +21,8 @@ jobs:
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-      script: 
+      script:
+        - ls -al "/c/Program Files (x86)/Windows Kits/10/Include"
         - echo "Building Windows MSVC Natives"
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
         - PATH=$MSBUILDPATH:$PATH
