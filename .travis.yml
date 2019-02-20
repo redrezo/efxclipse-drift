@@ -64,6 +64,9 @@ jobs:
       language: cpp
       compiler:
         - gcc
+      cache:
+        directories:
+        - $HOME/.m2
       before_install:
         - sudo apt-get install mesa-common-dev
         - sudo apt-get install cmake
