@@ -94,12 +94,12 @@ jobs:
       before_install:
         - pip install --user awscli
       before_script:
-        - mkdir natives
-        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so natives/libdriftfx.so
-        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib natives/libdriftfx.dylib
-        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll natives/driftfx.dll
-        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib natives/driftfx.lib
-        - ls -al natives
+        - rm org.eclipse.fx.drift/native/*
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so org.eclipse.fx.drift/native/libdriftfx.so
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib org.eclipse.fx.drift/native/libdriftfx.dylib
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll org.eclipse.fx.drift/native/driftfx.dll
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib org.eclipse.fx.drift/native/driftfx.lib
+        - ls -al org.eclipse.fx.drift/native
       script: 
         - echo "executing Maven"
         - mvn clean package
