@@ -26,7 +26,7 @@ jobs:
       script:    
           #        - ls -al "/c/Program Files (x86)/Windows Kits/10/Include"
         - echo "Building Windows MSVC Natives"
-        - aws sts get-caller-identity
+        - aws.exe sts get-caller-identity
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
         - PATH=$MSBUILDPATH:$PATH
         - MSBuild.exe -version
@@ -54,13 +54,12 @@ jobs:
         - cd ${TRAVIS_BUILD_DIR}
       script: 
         - echo "Building MacOS GCC Natives"
-        - aws sts get-caller-identity
-        - cmake --version
         - mkdir build
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - make
-        - ls -al
+      after_success:
+        - aws s3 cp libdriftfx.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
@@ -78,18 +77,13 @@ jobs:
         - mv cmake-3.13.0-Linux-x86_64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
-
-      before_script:
-              #   - pip install cmake
       script:
         - echo "Building Linux GCC Natives"
-        - aws sts get-caller-identity
-        - cmake --version
         - mkdir build
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - make
-        - ls -al
+      after_success:
         - aws s3 cp libdriftfx.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so
     - stage: build-java
       name: "Java Build"
