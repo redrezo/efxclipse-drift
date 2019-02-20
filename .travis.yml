@@ -93,14 +93,17 @@ jobs:
       language: java
       before_install:
         - pip install --user awscli
-      script: 
-        - echo "executing Maven"
+      before_script:
         - mkdir natives
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so natives/libdriftfx.so
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib natives/libdriftfx.dylib
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll natives/driftfx.dll
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib natives/driftfx.lib
         - ls -al natives
+      script: 
+        - echo "executing Maven"
         - mvn clean package
-        - ls -al target
+        - ls -al org.eclipse.fx.drift.updatesite/target
+      after_success:
+              - aws s3 cp org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/updatesite.zip
 
