@@ -20,10 +20,10 @@
 	#define DLL_LOCAL
 #else
 	#if __GNUC__ >= 4
-		#define DLL_PUBLIC __attribute__ ((visibility ("default")))
+		#define DRIFT_API __attribute__ ((visibility ("default")))
 		#define DLL_LOCAL  __attribute__ ((visibility ("hidden")))
 	#else
-		#define DLL_PUBLIC
+		#define DRIFT_API
 		#define DLL_LOCAL
 	#endif
 #endif
