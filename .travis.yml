@@ -64,9 +64,6 @@ jobs:
       language: cpp
       compiler:
         - gcc
-      cache:
-        directories:
-        - $HOME/.m2
       before_install:
         - sudo apt-get install mesa-common-dev
         - sudo apt-get install cmake
@@ -91,6 +88,9 @@ jobs:
       name: "Java Build"
       os: linux
       language: java
+      cache:
+        directories:
+        - $HOME/.m2
       before_install:
         - pip install --user awscli
       before_script:
