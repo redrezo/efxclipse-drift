@@ -12,15 +12,16 @@
 #ifndef UTILS_LOGGER_H_
 #define UTILS_LOGGER_H_
 
+#include "../../../DriftFX/include/DriftFX/Common.h"
 
 #include <iostream>
 #include <ostream>
 #include <string>
 
-enum __declspec(dllexport) LogLevel { Debug, Error, Info };
+enum DRIFT_API LogLevel { Debug, Error, Info };
 
-__declspec(dllexport) std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
-__declspec(dllexport) std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
+DRIFT_API std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
+DRIFT_API std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
 
 #define WITH_LOGGING 0
 
