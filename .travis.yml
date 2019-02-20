@@ -8,9 +8,8 @@ jobs:
       name: "Windows MSVC Natives"
       os: windows
       language: shell
-      before_install:
-        - pip install --user awscli
       install:
+         - choco install awscli
           #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
           #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
           #        - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-win64-x64.zip 2>>wgeterr.log
@@ -58,6 +57,7 @@ jobs:
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - make
+        - ls -al
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
@@ -85,8 +85,8 @@ jobs:
         - mkdir build
         - cd build
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
-        - ls -al
         - make
+        - ls -al
     - stage: build-java
       name: "Java Build"
       os: linux
