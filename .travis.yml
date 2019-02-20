@@ -23,14 +23,12 @@ jobs:
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-      script:  
+      before_script:  
         - AWSPATH="/c/Program Files/Amazon/AWSCLI"
-        - ls -al "$AWSPATH"
-        - PATH=$AWSPATH:$PATH
-        - echo "Building Windows MSVC Natives"
-        - aws.exe sts get-caller-identity
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
-        - PATH=$MSBUILDPATH:$PATH
+        - PATH=$MSBUILDPATH:$AWSPATH:$PATH
+      script:
+        - echo "Building Windows MSVC Natives"
         - mkdir build
         - cd build
         - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
@@ -94,7 +92,6 @@ jobs:
         - pip install --user awscli
       script: 
         - echo "executing Maven"
-        - aws sts get-caller-identity
         - mkdir natives
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so natives/libdriftfx.so
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib natives/libdriftfx.dylib
