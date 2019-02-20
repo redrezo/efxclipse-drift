@@ -9,6 +9,8 @@
  *     Christoph Caks <ccaks@bestsolution.at> - initial API and implementation
  */
 
+#include <GL/glew.h>
+
 #include "GLXSharedTexture.h"
 
 #include <utils/Logger.h>

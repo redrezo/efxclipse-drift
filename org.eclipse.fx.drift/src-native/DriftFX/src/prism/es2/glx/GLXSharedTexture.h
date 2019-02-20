@@ -11,6 +11,7 @@
 #ifndef PRISM_ES2_GLX_GLXSHAREDTEXTURE_H_
 #define PRISM_ES2_GLX_GLXSHAREDTEXTURE_H_
 
+#include <GL/GL.h>
 #include <DriftFX/GL/GLContext.h>
 
 #include "SharedTexture.h"
