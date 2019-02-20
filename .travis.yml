@@ -88,6 +88,7 @@ jobs:
         - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - make
         - ls -al
+        - aws s3 cp libdriftfx.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so
     - stage: build-java
       name: "Java Build"
       os: linux
