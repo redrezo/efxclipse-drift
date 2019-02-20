@@ -110,35 +110,17 @@ target_link_libraries(driftfx PRIVATE ${OPENGL_LIBRARIES} ${DIRECTX9_LIBRARIES})
 
 else ()
 
-add_library(driftfx SHARED DriftFX/src/null.cpp)
-
-if (WIN32)
-set(LIB_NAME driftfx.dll)
-
-	set_target_properties(driftfx
-		PROPERTIES PREFIX "")
-
-	target_link_libraries(driftfx
-			"-Wl,--whole-archive"
-			glew
-			utils
-			DriftFX
-			"-Wl,--no-whole-archive"
-			${LinkLibraries}
-		)
-
-endif (WIN32)
+add_library(driftfx SHARED 
+	$<TARGET_OBJECTS:DriftFX-OBJ> 
+	$<TARGET_OBJECTS:Utils-OBJ> 
+	$<TARGET_OBJECTS:Glew-OBJ>)
 
 if (APPLE)
 set(LIB_NAME libdriftfx.dylib)
-target_link_options(driftfx PRIVATE "-Wl,-all_load")
+#target_link_options(driftfx PRIVATE "-Wl,-all_load")
 target_link_libraries(driftfx
 			${LinkLibraries}
-			"-Wl,-all_load"
-			DriftFX
-			utils
-			glew
-		)
+)
 endif (APPLE)
 
 if (LINUX)
@@ -146,12 +128,7 @@ if (LINUX)
 	
 	target_link_libraries(driftfx
 		${LinkLibraries}
-		"-Wl,--whole-archive"
-		DriftFX
-		utils
-		glew
-		"-Wl,--no-whole-archive"
-	)
+)
 
 endif (LINUX)
 
@@ -164,16 +141,5 @@ endif ()
 #		"$<TARGET_FILE:driftfx>"
 #		"${PROJECT_SOURCE_DIR}/../native/${LIB_NAME}")
 #		
-		
-add_custom_target(debug
-	COMMAND ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE=Debug ${CMAKE_SOURCE_DIR}
-	COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target all
-	COMMENT "Creating binaries in debug mode"
-)
 
-add_custom_target(release
-	COMMAND ${CMAKE_COMMAND} -DCMAKE_BUILD_TYPE=Release ${CMAKE_SOURCE_DIR}
-	COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target all
-	COMMENT "Creating binaries in release mode"
-)
 		
