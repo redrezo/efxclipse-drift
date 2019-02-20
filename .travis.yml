@@ -23,7 +23,10 @@ jobs:
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-      script:    
+      script:  
+        - AWSPATH="/c/Program Files/Amazon/AWSCLI"
+        - ls -al "$AWSPATH"
+        - PATH=$AWSPATH:$PATH
           #        - ls -al "/c/Program Files (x86)/Windows Kits/10/Include"
         - echo "Building Windows MSVC Natives"
         - aws.exe sts get-caller-identity
@@ -48,7 +51,7 @@ jobs:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
         - travis_retry wget --no-check-certificate https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
-        - tar -xvf cmake-3.13.0-Darwin-x86_64.tar.gz > /dev/null
+        - tar -xvf cmake-3.13.0-Darwin-x86_64.tar.gz > /dev/null 2> /dev/null
         - mv cmake-3.13.0-Darwin-x86_64 cmake-install
         - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/CMake.app/Contents/bin:$PATH
         - cd ${TRAVIS_BUILD_DIR}
