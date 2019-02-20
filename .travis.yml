@@ -5,7 +5,7 @@ stages:
 jobs:
   include:
     - stage: build-natives
-      #filter_secrets: false
+      filter_secrets: false
       name: "Windows MSVC Natives"
       os: windows
       language: shell
@@ -40,8 +40,10 @@ jobs:
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
-      before_install:
-        - pip install --user awscli
+      addons:
+        homebrew:
+          packages:
+            - awscli
       install:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
