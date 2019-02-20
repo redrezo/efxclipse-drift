@@ -13,6 +13,7 @@
 #include <string>
 #include <string.h>
 #include <algorithm>
+#include <sstream>
 
 #include <utils/Logger.h>
 
@@ -54,5 +55,8 @@ std::string cut(std::string str, size_t size) {
 
 std::ostream& Log(LogLevel level, std::string file, int line, std::string func) {
 	std::string fname = filename(file);
-	return std::cout << "[C] [" << std::setw(5) << level << "] " << std::setw(40) << std::right << cut(fname, 40) << ":" << std::dec << std::setw(3) << line << " - " << std::setw(100) << std::left << cut(func, 100) << " ";
+
+	std::ostringstream os;
+	os << "[C] [" << std::setw(5) << level << "] " << std::setw(40) << std::right << cut(fname, 40) << ":" << std::dec << std::setw(3) << line << " - " << std::setw(100) << std::left << cut(func, 100) << " ";
+	return std::cout << os.str();
 }

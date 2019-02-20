@@ -20,7 +20,7 @@
 
 enum DRIFT_API LogLevel { Debug, Error, Info };
 
-DRIFT_API std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
+std::ostream& operator<<(std::ostream& ostr, const LogLevel& level);
 DRIFT_API std::ostream& Log(LogLevel level, std::string file, int line, std::string func);
 
 #define WITH_LOGGING 0

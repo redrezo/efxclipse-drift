@@ -12,16 +12,21 @@ endif ()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /NODEFAULTLIB:libc.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib")
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MT")
+#set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /VERBOSE:LIB /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:msvcrtd.lib")
+set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /VERBOSE:LIB /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrt.lib /NODEFAULTLIB:libcd.lib /NODEFAULTLIB:msvcrtd.lib")
 
-if (WIN32)
+
+#if (WIN32)
 #set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,$$ORIGIN -Wl,--export-all-symbols -static-libgcc -static-libstdc++ -static -lpthread")
-endif (WIN32)
+#endif (WIN32)
 
-if (APPLE)
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,$$ORIGIN  -static-libgcc -static-libstdc++ -static -lpthread")
-endif (APPLE)
+#if (APPLE)
+#set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-rpath,$$ORIGIN  -static-libgcc -static-libstdc++ -static -lpthread")
+#endif (APPLE)
 
-enable_testing()
+#enable_testing()
 
 if (APPLE)
   # since apple deprecated OpenGL we do not want to see this during the build
@@ -91,50 +96,52 @@ endif (APPLE)
 
 # configuring msvc to include the runtime
 if (WIN32)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /VERBOSE:LIB")
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MT")
+
 endif (WIN32)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
 include_directories(${DRIECTX_INCLUDE_DIRS})
 
-add_library(driftfx SHARED 
-	$<TARGET_OBJECTS:DriftFX-OBJ> 
-	$<TARGET_OBJECTS:Utils-OBJ> 
-	$<TARGET_OBJECTS:Glew-OBJ>)
+#add_library(driftfx SHARED 
+#	$<TARGET_OBJECTS:DriftFX-OBJ> 
+#	$<TARGET_OBJECTS:Utils-OBJ> 
+#	$<TARGET_OBJECTS:Glew-OBJ>)
 #target_compile_definitions(driftfx PRIVATE GLEW_BUILD) # TODO verify if we need this
 #target_compile_definitions(driftfx PUBLIC GLEW_STATIC)
 
-target_link_libraries(driftfx PRIVATE ${OPENGL_LIBRARIES} ${DIRECTX9_LIBRARIES})
+#target_link_libraries(driftfx PRIVATE ${OPENGL_LIBRARIES} ${DIRECTX9_LIBRARIES})
 
 
 else ()
 
-add_library(driftfx SHARED 
-	$<TARGET_OBJECTS:DriftFX-OBJ> 
-	$<TARGET_OBJECTS:Utils-OBJ> 
-	$<TARGET_OBJECTS:Glew-OBJ>)
+#add_library(driftfx SHARED 
+#	$<TARGET_OBJECTS:DriftFX-OBJ> 
+#	$<TARGET_OBJECTS:Utils-OBJ> 
+#	$<TARGET_OBJECTS:Glew-OBJ>)
 
 if (APPLE)
 set(LIB_NAME libdriftfx.dylib)
 #target_link_options(driftfx PRIVATE "-Wl,-all_load")
-target_link_libraries(driftfx
-			${LinkLibraries}
-)
+#target_link_libraries(driftfx
+#			${LinkLibraries}
+#)
 endif (APPLE)
 
 if (LINUX)
 	set(LIB_NAME libdriftfx.so)
 	
-	target_link_libraries(driftfx
-		${LinkLibraries}
-)
+#	target_link_libraries(driftfx
+#		${LinkLibraries}
+#)
 
 endif (LINUX)
 
 
 endif ()
 
+add_subdirectory(samples)
 
 #add_custom_command(TARGET driftfx POST_BUILD
 #	COMMAND ${CMAKE_COMMAND} -E copy_if_different

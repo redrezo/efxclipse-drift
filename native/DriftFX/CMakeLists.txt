@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.1)
 project(DriftFX CXX)
 
+
+
 # configuring msvc to include the runtime
-if (WIN32)
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-endif (WIN32)
+#if (WIN32)
+#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MT")
+#endif (WIN32)
 
 set(DriftFX-Headers
 	include/DriftFX/Common.h
@@ -86,18 +88,21 @@ endif (APPLE)
 include_directories(include)
 include_directories(src)
 
-add_library(DriftFX-OBJ OBJECT ${DriftFX-Headers} ${DriftFX-Sources})
-target_include_directories(DriftFX-OBJ PUBLIC include)
-set_property(TARGET DriftFX-OBJ PROPERTY POSITION_INDEPENDENT_CODE ON)
-target_compile_definitions(DriftFX-OBJ PRIVATE BUILDING_DLL)
-target_link_libraries(DriftFX-OBJ PUBLIC Utils-OBJ)
-target_link_libraries(DriftFX-OBJ PUBLIC Glew-OBJ)
+add_library(driftfx SHARED ${DriftFX-Headers} ${DriftFX-Sources} $<TARGET_OBJECTS:Glew-OBJ> $<TARGET_OBJECTS:Utils-OBJ>)
+target_include_directories(driftfx PUBLIC include)
+set_property(TARGET driftfx PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_compile_definitions(driftfx PRIVATE BUILDING_DLL)
+
+target_compile_definitions(driftfx PRIVATE GLEW_BUILD) # to get exports
+
+target_link_libraries(driftfx PUBLIC Utils-OBJ)
+target_link_libraries(driftfx PUBLIC Glew-OBJ)
 
 #target_compile_definitions(DriftFX-OBJ PUBLIC GLEW_STATIC)
 
 if (WIN32)
 #target_link_libraries(DriftFX-OBJ PUBLIC opengl32 gdi32)
-target_include_directories(DriftFX-OBJ PRIVATE ${DIRECTX_INCLUDE_DIRS})
-target_link_libraries(DriftFX-OBJ PUBLIC ${DIRECTX9_LIBRARIES})
+target_include_directories(driftfx PRIVATE ${DIRECTX_INCLUDE_DIRS})
+target_link_libraries(driftfx PUBLIC ${DIRECTX9_LIBRARIES})
 endif (WIN32)
 

@@ -53,9 +53,12 @@ public:
 
 	void prepare() {
 		LogDebug("prepare");
+
 		surface->Initialize();
 		ctx = surface->GetContext();
 		ctx->SetCurrent();
+		//GLenum result = glewInit();
+		//LogDebug("glew init: " << result);
 
 		glGenFramebuffers(1, &fb);
 		LogDebug("prepare done");
