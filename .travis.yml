@@ -8,6 +8,8 @@ jobs:
       name: "Windows MSVC Natives"
       os: windows
       language: shell
+      before_install:
+        - pip install --user awscli
       install:
           #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
           #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -21,9 +23,10 @@ jobs:
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
-      script:
-        - ls -al "/c/Program Files (x86)/Windows Kits/10/Include"
+      script:    
+          #        - ls -al "/c/Program Files (x86)/Windows Kits/10/Include"
         - echo "Building Windows MSVC Natives"
+        - aws sts get-caller-identity
         - MSBUILDPATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
         - PATH=$MSBUILDPATH:$PATH
         - MSBuild.exe -version
@@ -33,9 +36,12 @@ jobs:
         - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
         - ls -al
         - MSBuild.exe releng.sln
+        - ls -al driftfx/Debug
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
+      before_install:
+        - pip install --user awscli
       install:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -46,6 +52,7 @@ jobs:
         - cd ${TRAVIS_BUILD_DIR}
       script: 
         - echo "Building MacOS GCC Natives"
+        - aws sts get-caller-identity
         - cmake --version
         - mkdir build
         - cd build
@@ -58,6 +65,8 @@ jobs:
         - gcc
       before_install:
         - sudo apt-get install mesa-common-dev
+        - sudo apt-get install cmake
+        - pip install --user awscli
       install:
         - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
         - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
@@ -71,6 +80,7 @@ jobs:
               #   - pip install cmake
       script:
         - echo "Building Linux GCC Natives"
+        - aws sts get-caller-identity
         - cmake --version
         - mkdir build
         - cd build
@@ -83,5 +93,6 @@ jobs:
       language: java
       script: 
         - echo "executing Maven"
+        - aws sts get-caller-identity
         - mvn --version
 
