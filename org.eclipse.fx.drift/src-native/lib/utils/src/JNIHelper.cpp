@@ -60,7 +60,7 @@ void JNIHelper::AttachThread() {
 			os << "C++ Thread id: " << this_thread::get_id();
 			JavaVMAttachArgs args;
 			args.version = JNI_VERSION_1_6;
-			args.name = _strdup(os.str().c_str());
+			args.name = strdup(os.str().c_str());
 			args.group = NULL;
 			jint attachResult = jvm->AttachCurrentThreadAsDaemon((void**)&jniEnv, &args);
 			if (JNI_OK != attachResult) {
