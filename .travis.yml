@@ -45,6 +45,7 @@ jobs:
           packages:
             - awscli
             - cmake
+          update: true
       install:
         - cmake -version
         - brew desc cmake
