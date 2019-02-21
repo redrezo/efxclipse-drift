@@ -11,11 +11,10 @@
 #ifndef JNIHELPER_H_
 #define JNIHELPER_H_
 
-#include "../../../DriftFX/include/DriftFX/Common.h"
 #include <jni.h>
 
 
-class DRIFT_API JNIHelper {
+class JNIHelper {
 
 public:
 	static void Initialize(JavaVM* jvm);

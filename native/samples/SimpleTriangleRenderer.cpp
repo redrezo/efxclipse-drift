@@ -224,6 +224,7 @@ public:
 		surface->Initialize();
 		ctx = surface->GetContext();
 		ctx->SetCurrent();
+		LogDebug("sample glew init " << glewInit());
 
 		glGenFramebuffers(1, &fb);
 

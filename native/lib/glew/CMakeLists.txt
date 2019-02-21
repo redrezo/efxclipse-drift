@@ -13,13 +13,13 @@ set(Glew-Sources
 	src/glew.c
 	)
 
-add_library(Glew-OBJ OBJECT ${Glew-Headers} ${Glew-Sources})
-target_include_directories(Glew-OBJ PUBLIC "include")
-target_compile_definitions(Glew-OBJ PRIVATE GLEW_BUILD) # to get exports
-set_property(TARGET Glew-OBJ PROPERTY POSITION_INDEPENDENT_CODE ON)
+add_library(lib-glew-obj OBJECT ${Glew-Headers} ${Glew-Sources})
+target_include_directories(lib-glew-obj PUBLIC "include")
+target_compile_definitions(lib-glew-obj PUBLIC GLEW_STATIC)
+set_property(TARGET lib-glew-obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if (WIN32)
-	target_link_libraries(Glew-OBJ PUBLIC opengl32 gdi32)
+	target_link_libraries(lib-glew-obj PUBLIC opengl32 gdi32)
 endif(WIN32)
 
 

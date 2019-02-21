@@ -57,8 +57,7 @@ public:
 		surface->Initialize();
 		ctx = surface->GetContext();
 		ctx->SetCurrent();
-		//GLenum result = glewInit();
-		//LogDebug("glew init: " << result);
+		LogDebug("sample glew init " << glewInit());
 
 		glGenFramebuffers(1, &fb);
 		LogDebug("prepare done");

@@ -88,15 +88,13 @@ endif (APPLE)
 include_directories(include)
 include_directories(src)
 
-add_library(driftfx SHARED ${DriftFX-Headers} ${DriftFX-Sources} $<TARGET_OBJECTS:Glew-OBJ> $<TARGET_OBJECTS:Utils-OBJ>)
+add_library(driftfx SHARED ${DriftFX-Headers} ${DriftFX-Sources} $<TARGET_OBJECTS:lib-glew-obj> $<TARGET_OBJECTS:lib-utils-obj>)
 target_include_directories(driftfx PUBLIC include)
 set_property(TARGET driftfx PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_compile_definitions(driftfx PRIVATE BUILDING_DLL)
 
-target_compile_definitions(driftfx PRIVATE GLEW_BUILD) # to get exports
-
-target_link_libraries(driftfx PUBLIC Utils-OBJ)
-target_link_libraries(driftfx PUBLIC Glew-OBJ)
+target_link_libraries(driftfx PUBLIC lib-utils-obj)
+target_link_libraries(driftfx PUBLIC lib-glew-obj)
 
 #target_compile_definitions(DriftFX-OBJ PUBLIC GLEW_STATIC)
 
