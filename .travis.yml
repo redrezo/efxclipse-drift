@@ -68,8 +68,6 @@ jobs:
       compiler:
         - gcc
       before_install:
-        - sudo apt-get install mesa-common-dev
-        - sudo apt-get install cmake
         - pip install --user awscli
         - pip install --user cmake == 3.13.0
           #      install:
@@ -114,5 +112,5 @@ jobs:
         - mvn clean package
         - ls -al org.eclipse.fx.drift.updatesite/target
       after_success:
-              - aws s3 cp org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/updatesite.zip
+        - aws s3 cp org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/updatesite.zip
 
