@@ -36,12 +36,7 @@ endif (APPLE)
 
 
 # JNI
-# TODO improve this (look for jdk8 JNI)
 find_package(JNI REQUIRED)
-
-message("JNI: " ${JNI_INCLUDE_DIRS})
-message("JNI: " ${JNI_LIBRARIES})
-
 # OpenGL
 find_package(OpenGL REQUIRED)
 
@@ -67,81 +62,43 @@ if (WIN32)
 	message ("DirectX9 Lib: ${DIRECTX9_LIBRARIES}")
 endif (WIN32)
 
-include_directories(${JNI_INCLUDE_DIRS})
+
 
 if (APPLE)
-# Add macos framework symlinks for CDT
-include_directories( "../../MacOSFrameworks/" )
-include_directories( "../../JNIHeader/" )
+	# Add macos framework symlinks for CDT
+	include_directories( "../../MacOSFrameworks/" )
+	include_directories( "../../JNIHeader/" )
 endif (APPLE)
+
+
+# setup IncludeDirectories
+list(APPEND IncludeDirectories ${JNI_INCLUDE_DIRS})
+if (WIN32)
+	list(APPEND IncludeDirectories ${DIRECTX_INCLUDE_DIRS})
+endif (WIN32)
+
+
+# setup LinkLibraries
+if (APPLE)
+	list(APPEND LinkLibraries "-framework OpenGL")
+	list(APPEND LinkLibraries "-framework Cocoa")
+	list(APPEND LinkLibraries "-framework IOSurface")
+	list(APPEND LinkLibraries "-framework CoreFoundation")
+else (APPLE)
+
+	list(APPEND LinkLibraries ${OPENGL_LIBRARIES})
+
+	if (WIN32)
+		list(APPEND LinkLibraries ${DIRECTX9_LIBRARIES})
+	endif (WIN32)
+
+endif (APPLE)
+
+
 
 add_subdirectory(lib/glew)
 add_subdirectory(lib/utils)
-
 add_subdirectory(DriftFX)
-
-
-list(APPEND LinkLibraries ${OPENGL_LIBRARIES})
-
-if (WIN32)
-list(APPEND LinkLibraries ${DIRECTX9_LIBRARIES})
-endif (WIN32)
-
-
-if (APPLE)
-list(APPEND LinkLibraries "-framework OpenGL")
-list(APPEND LinkLibraries "-framework Cocoa")
-list(APPEND LinkLibraries "-framework IOSurface")
-list(APPEND LinkLibraries "-framework CoreFoundation")
-endif (APPLE)
-
-# configuring msvc to include the runtime
-if (WIN32)
-#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MT")
-
-endif (WIN32)
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-
-include_directories(${DRIECTX_INCLUDE_DIRS})
-
-#add_library(driftfx SHARED 
-#	$<TARGET_OBJECTS:DriftFX-OBJ> 
-#	$<TARGET_OBJECTS:Utils-OBJ> 
-#	$<TARGET_OBJECTS:Glew-OBJ>)
-#target_compile_definitions(driftfx PRIVATE GLEW_BUILD) # TODO verify if we need this
-#target_compile_definitions(driftfx PUBLIC GLEW_STATIC)
-
-#target_link_libraries(driftfx PRIVATE ${OPENGL_LIBRARIES} ${DIRECTX9_LIBRARIES})
-
-
-else ()
-
-#add_library(driftfx SHARED 
-#	$<TARGET_OBJECTS:DriftFX-OBJ> 
-#	$<TARGET_OBJECTS:Utils-OBJ> 
-#	$<TARGET_OBJECTS:Glew-OBJ>)
-
-if (APPLE)
-set(LIB_NAME libdriftfx.dylib)
-#target_link_options(driftfx PRIVATE "-Wl,-all_load")
-#target_link_libraries(driftfx
-#			${LinkLibraries}
-#)
-endif (APPLE)
-
-if (LINUX)
-	set(LIB_NAME libdriftfx.so)
-	
-#	target_link_libraries(driftfx
-#		${LinkLibraries}
-#)
-
-endif (LINUX)
-
-
-endif ()
-
 add_subdirectory(samples)
 
 #add_custom_command(TARGET driftfx POST_BUILD

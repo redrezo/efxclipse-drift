@@ -21,5 +21,5 @@ add_library(lib-utils-obj OBJECT ${Utils-Headers} ${Utils-Sources})
 target_include_directories(lib-utils-obj PUBLIC include)
 set_property(TARGET lib-utils-obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_compile_definitions(lib-utils-obj PRIVATE BUILDING_DLL)
-
+target_include_directories(lib-utils-obj PRIVATE ${IncludeDirectories})
 

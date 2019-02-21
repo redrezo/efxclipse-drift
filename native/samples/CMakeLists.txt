@@ -9,7 +9,9 @@ list(APPEND SourcesList SimpleTriangleRenderer)
 
 # we're building a library
 add_library(samples SHARED ${SourcesList} $<TARGET_OBJECTS:lib-glew-obj> $<TARGET_OBJECTS:lib-utils-obj>)
-target_link_libraries(samples driftfx)
+target_link_libraries(samples PRIVATE driftfx)
+target_link_libraries(samples PRIVATE ${LinkLibraries})
+target_include_directories(samples PRIVATE ${IncludeDirectories})
 set_property(TARGET samples PROPERTY POSITION_INDEPENDENT_CODE ON)
 	
 	

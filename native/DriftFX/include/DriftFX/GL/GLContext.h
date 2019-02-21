@@ -11,12 +11,13 @@
 #ifndef DRIFTFX_GL_GLCONTEXT_H_
 #define DRIFTFX_GL_GLCONTEXT_H_
 
+#include <DriftFX/Common.h>
 #include <DriftFX/Context.h>
 
 namespace driftfx {
 namespace gl {
 
-class GLContext : public Context {
+class DRIFT_API GLContext : public Context {
 
 public:
 	virtual void SetCurrent() = 0;
