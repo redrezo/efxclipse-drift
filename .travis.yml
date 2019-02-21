@@ -98,7 +98,7 @@ jobs:
         - $HOME/.m2
       before_install:
         - pip install --user awscli
-      before_script:
+      install:
         - rm org.eclipse.fx.drift/native/*
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so org.eclipse.fx.drift/native/libdriftfx.so
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib org.eclipse.fx.drift/native/libdriftfx.dylib
