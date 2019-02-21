@@ -70,7 +70,7 @@ jobs:
         - gcc
       before_install:
         - pip install --user awscli
-        - pip install --user cmake == 3.13.0
+        - pip install --user cmake==3.13.0
           #      install:
           #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
           #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
