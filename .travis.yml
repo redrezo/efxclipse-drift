@@ -44,12 +44,11 @@ jobs:
         homebrew:
           packages:
             - awscli
-            - cmake
-          update: true
       install:
         - cmake -version
         - brew desc cmake
         - brew info cmake
+        - tools/install_cmake_macos.sh
               #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
               #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
               #        - travis_retry wget --no-check-certificate -nv https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
