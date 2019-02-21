@@ -18,8 +18,8 @@ jobs:
           #        - mv cmake-3.13.0-win64-x64 cmake-install
           #        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
           #        - cd ${TRAVIS_BUILD_DIR}
-        - choco install cmake --version 3.13.0
-        - choco install jdk8
+        - choco install cmake.portable --version 3.13.0
+        - choco install jdk8.portable
         - choco install visualstudio2017buildtools
         - choco install visualstudio2017-workload-vctools
         - choco install visualstudio2017-workload-nativedesktop
