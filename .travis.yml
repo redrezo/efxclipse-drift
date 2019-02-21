@@ -59,9 +59,9 @@ jobs:
         - cmake -G "Unix Makefiles" ../native || cat CMakeFiles/CMakeOutput.log
         - make
       after_success:
-        - ls -al
-        - aws s3 cp libdriftfx.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib
-        - aws s3 cp libsamples.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libsamples.dylib
+        - ls -al DriftFX
+        - aws s3 cp DriftFX/libdriftfx.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib
+        - aws s3 cp samples/libsamples.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libsamples.dylib
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
@@ -86,9 +86,9 @@ jobs:
         - cmake -G "Unix Makefiles" ../native || cat CMakeFiles/CMakeOutput.log
         - make
       after_success:
-        - ls -al
-        - aws s3 cp libdriftfx.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so
-        - aws s3 cp libsamples.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libsamples.so
+        - ls -al DriftFX
+        - aws s3 cp DriftFX/libdriftfx.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so
+        - aws s3 cp samples/libsamples.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libsamples.so
     - stage: build-java
       name: "Java Build"
       os: linux
