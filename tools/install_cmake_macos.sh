@@ -7,7 +7,7 @@ CMAKE_PATH=$CMAKE_DIR/CMake.app/Contents/bin
 mkdir $CMAKE_DIR
 
 mkdir .setup && cd .setup
-travis_retry wget --no-check-certifacte -nv https://cmake.org/files/v3.13/$CMAKE.tar.gz
+wget --no-check-certifacte -nv -t10 https://cmake.org/files/v3.13/$CMAKE.tar.gz
 tar -xvf $CMAKE.tar.gz > /dev/null 2> /dev/null
 mv $CMAKE $CMAKE_DIR
 cd ..
