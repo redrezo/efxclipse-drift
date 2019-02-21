@@ -31,11 +31,12 @@ jobs:
         - echo "Building Windows MSVC Natives"
         - mkdir build
         - cd build
-        - cmake -G "Visual Studio 15 2017 Win64" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
+        - cmake -G "Visual Studio 15 2017 Win64" ../native || cat CMakeFiles/CMakeOutput.log
         - MSBuild.exe -verbosity:minimal releng.sln
       after_success:
-        - aws.exe s3 cp Debug/driftfx.dll s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll
-        - aws.exe s3 cp Debug/driftfx.lib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib
+        - aws.exe s3 cp DriftFX/Debug/driftfx.dll s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll
+        - aws.exe s3 cp DriftFX/Debug/driftfx.lib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib
+        - aws.exe s3 cp samples/Debug/samples.dll s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/samples.dll
     - name: "MacOS GCC Natives"
       os: osx
       language: cpp
@@ -55,10 +56,11 @@ jobs:
         - echo "Building MacOS GCC Natives"
         - mkdir build
         - cd build
-        - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
+        - cmake -G "Unix Makefiles" ../native || cat CMakeFiles/CMakeOutput.log
         - make
       after_success:
         - aws s3 cp libdriftfx.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libdriftfx.dylib
+        - aws s3 cp libsamples.dylib s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libsamples.dylib
     - name: "Linux GCC Natives"
       os: linux
       language: cpp
@@ -80,10 +82,11 @@ jobs:
         - echo "Building Linux GCC Natives"
         - mkdir build
         - cd build
-        - cmake -G "Unix Makefiles" ../org.eclipse.fx.drift/src-native || cat CMakeFiles/CMakeOutput.log
+        - cmake -G "Unix Makefiles" ../native || cat CMakeFiles/CMakeOutput.log
         - make
       after_success:
         - aws s3 cp libdriftfx.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libdriftfx.so
+        - aws s3 cp libsamples.so s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libsamples.so
     - stage: build-java
       name: "Java Build"
       os: linux
@@ -100,6 +103,10 @@ jobs:
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.dll org.eclipse.fx.drift/native/driftfx.dll
         - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/driftfx.lib org.eclipse.fx.drift/native/driftfx.lib
         - ls -al org.eclipse.fx.drift/native
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/linux/libsamples.so org.eclipse.fx.drift.samples/native/libsamples.so
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/macos/libsamples.dylib org.eclipse.fx.drift.samples/native/libsamples.dylib
+        - aws s3 cp s3://efxclipse-drift/$TRAVIS_BUILD_NUMBER/natives/windows/samples.dll org.eclipse.fx.drift.samples/native/samples.dll
+        - ls -al org.eclipse.fx.drift.samples/native
       script: 
         - echo "executing Maven"
         - mvn clean package
