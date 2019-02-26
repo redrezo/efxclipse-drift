@@ -12,13 +12,8 @@ cd ..
 rm -rf .setup
 
 export PATH=$CMAKE_PATH:$PATH
-ls -al
-ls -al $CMAKE_DIR
-ls -al $CMAKE_DIR/CMake.app
-ls -al $CMAKE_DIR/CMake.app/Contents
-ls -al $CMAKE_PATH
-echo $PATH
 
+echo "Installed CMake in $CMAKE_DIR"
 cmake -version
 
 cd $TRAVIS_BUILD_DIR
