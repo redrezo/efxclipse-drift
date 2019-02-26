@@ -48,7 +48,8 @@ jobs:
         - cmake -version
         - brew desc cmake
         - brew info cmake
-        - sh tools/install_cmake_macos.sh
+        - bash tools/install_cmake_macos.sh
+        - echo $PATH
               #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
               #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
               #        - travis_retry wget --no-check-certificate -nv https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
@@ -57,6 +58,7 @@ jobs:
               #        - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/CMake.app/Contents/bin:$PATH
               #        - cd ${TRAVIS_BUILD_DIR}
       script: 
+        - echo $PATH
         - echo "Building MacOS GCC Natives"
         - mkdir build
         - cd build
