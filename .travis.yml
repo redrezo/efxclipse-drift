@@ -48,8 +48,10 @@ jobs:
         - cmake -version
         - brew desc cmake
         - brew info cmake
-        - bash tools/install_cmake_macos.sh
+        - chmod +x tools/install_cmake_macos.sh
+        - tools/install_cmake_macos.sh
         - echo $PATH
+        - PATH=${TRAVIS_BUILD_DIR}/cmake.portable/CMake.app/Contents/bin:${PATH}
               #        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
               #        - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
               #        - travis_retry wget --no-check-certificate -nv https://cmake.org/files/v3.13/cmake-3.13.0-Darwin-x86_64.tar.gz
