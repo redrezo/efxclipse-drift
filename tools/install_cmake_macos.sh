@@ -15,6 +15,8 @@ rm -rf .setup
 
 export PATH=$CMAKE_PATH:$PATH
 
+echo $PATH
+
 cmake -version
 
 cd $TRAVIS_BUILD_DIR
