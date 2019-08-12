@@ -150,3 +150,7 @@ stages:
         inputs:
           PathtoPublish: org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip
           ArtifactName: driftfx
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip
+          artifact: 'driftfx-updatesite'
