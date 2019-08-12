@@ -1,8 +1,8 @@
 
 stages:
-  - stage: Build natives
+  - stage: build_natives
     jobs:
-    - job: Build Win32 natives
+    - job: build_win32_natives
       pool:
         vmImage: 'windows-2019'
       strategy:
@@ -15,7 +15,7 @@ stages:
       - bash: echo "This is Win32 ${CMAKE_BUILD_TYPE}"
       - bash: cmake
       - bash: msbuild /property:Configuration=${CMAKE_BUILD_TYPE}
-    - job: Build MacOS natives
+    - job: build_macos_natives
       pool:
         vmImage: 'macOS-10.14'
       strategy:
@@ -28,7 +28,7 @@ stages:
       - bash: echo "This is MacOS ${CMAKE_BUILD_TYPE}"
       - bash: cmake -D ${CMAKE_BUILD_TYPE}
       - bash: make
-    - job: Build Linux natives
+    - job: build_linux_natives
       pool:
         vmImage: 'ubuntu-16.04'
       strategy:
@@ -41,9 +41,9 @@ stages:
       - bash: echo "This is Linux ${CMAKE_BUILD_TYPE}"
       - bash: cmake -D ${CMAKE_BUILD_TYPE}
       - bash: make
-  - stage: Build Java
+  - stage: build_java
     jobs:
-    - job: Build Java
+    - job: build_java
       steps:
       - bash: mvn package
 
