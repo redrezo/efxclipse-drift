@@ -94,41 +94,41 @@ stages:
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'linux_Debug'
-         downloadPath: 'artifacts/linux/Debug/'
+         downloadPath: 'artifacts/'
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'linux_Release'
-         downloadPath: 'artifacts/linux/Release/'
+         downloadPath: 'artifacts/'
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'win32_Debug'
-         downloadPath: 'artifacts/win32/Debug/'
+         downloadPath: 'artifacts/'
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'win32_Release'
-         downloadPath: 'artifacts/win32/Release/'
+         downloadPath: 'artifacts/'
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'macos_Debug'
-         downloadPath: 'artifacts/macos/Debug/'
+         downloadPath: 'artifacts/'
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'macos_Release'
-         downloadPath: 'artifacts/macos/Release/'
+         downloadPath: 'artifacts/'
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
             # copy artifacts
-            cp artifacts/win32/Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
-            cp artifacts/win32/Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
-            cp artifacts/macos/Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
-            cp artifacts/macos/Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
-            cp artifacts/linux/Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
-            cp artifacts/linux/Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
-            cp artifacts/win32/Debug/samples.dll org.eclispe.fx.drift.samples/native/
-            cp artifacts/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
-            cp artifacts/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
+            cp artifacts/win32_Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
+            cp artifacts/win32_Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
+            cp artifacts/macos_Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
+            cp artifacts/macos_Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
+            cp artifacts/linux_Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
+            cp artifacts/linux_Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
+            cp artifacts/win32_Debug/samples.dll org.eclispe.fx.drift.samples/native/
+            cp artifacts/macos_Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
+            cp artifacts/linux_Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
