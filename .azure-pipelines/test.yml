@@ -21,6 +21,19 @@ stages:
         inputs:
           solution: build/releng.sln
           configuration: $(CMAKE_BUILD_TYPE)
+      - task: Bash@3
+        displayName: 'Prepare Build artifacts'
+        inputs:
+          script: |
+            mkdir -p artifacts/win32/$(CMAKE_BUILD_TYPE)
+            cp build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.dll artifacts/win32/$(CMAKE_BUILD_TYPE)/
+            cp build/DriftFX/$(CMAKE_BULID_TYPE)/driftfx.lib artifacts/win32/$(CMAKE_BUILD_TYPE)/
+            [[ "$(CMAKE_BUILD_TYPE)" == "Debug" ]] && cp build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.pdb artifacts/win32/$(CMAKE_BUILD_TYPE)/
+            cp build/samples/$(CMAKE_BUILD_TYPE)/samples.dll artifacts/win32/$(CMAKE_BUILD_TYPE)/
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'artifacts/*'
+          ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.dll
@@ -50,6 +63,17 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
       - bash: .azure-pipelines/build-unix.sh
+      - task: Bash@3
+        displayName: 'Prepare Build artifacts'
+        inputs:
+          script: |
+            mkdir -p artifacts/macos/$(CMAKE_BUILD_TYPE)
+            cp build/DriftFX/libdriftfx.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
+            cp build/samples/libsamples.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'artifacts/*'
+          ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: build/DriftFX/libdriftfx.dylib
@@ -70,6 +94,17 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
       - bash: .azure-pipelines/build-unix.sh
+      - task: Bash@3
+        displayName: 'Prepare Build artifacts'
+        inputs:
+          script: |
+            mkdir -p artifacts/macos/$(CMAKE_BUILD_TYPE)
+            cp build/DriftFX/libdriftfx.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
+            cp build/samples/libsamples.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: 'artifacts/*'
+          ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: build/DriftFX/libdriftfx.so
