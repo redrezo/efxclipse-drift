@@ -116,7 +116,8 @@ stages:
           jdkFile: 'jdk.tar.gz'
           jdkDestinationDirectory: '/builds/binaries/externals'
           cleanDestinationDirectory: true
-
+      - bash: echo $JAVA_HOME
+      - bash: ls -al $JAVA_HOME
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
