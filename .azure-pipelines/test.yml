@@ -62,14 +62,6 @@ stages:
         inputs:
           PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/DriftFX/libdriftfx.dylib
-          ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/samples/libsamples.dylib
-          ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
     - job: build_linux_natives
       displayName: Linux
       pool:
