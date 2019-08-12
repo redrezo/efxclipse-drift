@@ -12,7 +12,7 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
-      - bash: '.azure-pipeline/build-win32.sh'
+      - bash: '.azure-pipelines/build-win32.sh'
     - job: build_macos_natives
       pool:
         vmImage: 'macOS-10.14'
