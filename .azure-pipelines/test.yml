@@ -6,7 +6,7 @@ stages:
     - job: build_win32_natives
       displayName: Win32
       pool:
-        vmImage: 'windows-2019'
+        vmImage: 'vs2017-win2016'
       strategy:
         matrix:
           Debug:
@@ -14,7 +14,9 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
-      - bash: '.azure-pipelines/build-win32.sh'
+      - task: CMake@1
+        inputs:
+          cmakeArgs: '../native'
       - task: MSBuild@1
         inputs:
           solution: build/releng.sln
