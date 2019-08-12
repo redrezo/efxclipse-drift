@@ -154,3 +154,12 @@ stages:
         inputs:
           targetPath: org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip
           artifact: 'driftfx-updatesite'
+      - task: UniversalPackages@0
+        inputs:
+          command: 'publish'
+          publishDirectory: 'dist'
+          feedsToUsePublish: 'internal'
+          vstsFeedPublish: 'fdb4ce06-5bd6-47b3-ac78-d72cf66c9692'
+          versionOption: 'custom'
+          versionPublish: '$(Build.SourceVersion)'
+      
