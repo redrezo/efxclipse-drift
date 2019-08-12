@@ -106,5 +106,6 @@ stages:
         inputs:
          artifactName: 'macos_Release'
          downloadPath: 'artifacts/macos/Release/'
+      - bash: mvn -version
       - bash: mvn --batch-mode clean package
 
