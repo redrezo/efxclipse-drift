@@ -24,6 +24,7 @@ stages:
       - task: Bash@3
         displayName: 'Prepare Build artifacts'
         inputs:
+          targetType: 'inline'
           script: |
             mkdir -p artifacts/win32/$(CMAKE_BUILD_TYPE)
             cp build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.dll artifacts/win32/$(CMAKE_BUILD_TYPE)/
@@ -66,6 +67,7 @@ stages:
       - task: Bash@3
         displayName: 'Prepare Build artifacts'
         inputs:
+          targetType: 'inline'
           script: |
             mkdir -p artifacts/macos/$(CMAKE_BUILD_TYPE)
             cp build/DriftFX/libdriftfx.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
@@ -97,6 +99,7 @@ stages:
       - task: Bash@3
         displayName: 'Prepare Build artifacts'
         inputs:
+          targetType: 'inline'
           script: |
             mkdir -p artifacts/macos/$(CMAKE_BUILD_TYPE)
             cp build/DriftFX/libdriftfx.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
