@@ -115,15 +115,15 @@ stages:
           targetType: 'inline'
           script: |
             # copy artifacts
-            cp artifacts/win32/Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
-            cp artifacts/win32/Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
-            cp artifacts/macos/Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
-            cp artifacts/macos/Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
-            cp artifacts/linux/Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
-            cp artifacts/linux/Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
-            cp artifacts/win32/Debug/samples.dll org.eclipse.fx.drift.samples/native/
-            cp artifacts/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
-            cp artifacts/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
+            cp artifacts/driftfx_natives/win32/Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
+            cp artifacts/driftfx_natives/win32/Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
+            cp artifacts/driftfx_natives/macos/Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
+            cp artifacts/driftfx_natives/macos/Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
+            cp artifacts/driftfx_natives/linux/Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
+            cp artifacts/driftfx_natives/linux/Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
+            cp artifacts/driftfx_natives/win32/Debug/samples.dll org.eclipse.fx.drift.samples/native/
+            cp artifacts/driftfx_natives/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
+            cp artifacts/driftfx_natives/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
@@ -140,7 +140,7 @@ stages:
             mkdir dist/include
             cp -R native/DriftFX/include/* dist/include/
             mkdir dist/libs
-            cp -R artifacts/* dist/libs/
+            cp -R artifacts/driftfx_natives/* dist/libs/
             zip -r dist.zip dist/*
       - task: PublishBuildArtifacts@1
         inputs:
