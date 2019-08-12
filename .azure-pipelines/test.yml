@@ -111,11 +111,9 @@ stages:
       - bash: tar xvzf jdk.tar.gz
       - task: Maven@3
         inputs:
-          jdkDirectory: './jdk'
+          jdkDirectory: './zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64'
           mavenPomFile: 'pom.xml'
           options: '--batch-mode'
           goals: 'clean package'
-          javaHomeOption: 'JDKVersion'
-          jdkVersionOption: '1.8'
           mavenVersionOption: 'Default'
 
