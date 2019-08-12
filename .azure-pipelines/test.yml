@@ -26,10 +26,7 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
-      - bash: echo "This is MacOS ${CMAKE_BUILD_TYPE}"
-      - bash: mkdir build && cd build
-      - bash: cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -G "Unix Makefiles" ../native
-      - bash: make
+      - bash: .azure-pipelines/build-unix.sh
     - job: build_linux_natives
       pool:
         vmImage: 'ubuntu-16.04'
@@ -40,10 +37,7 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
-      - bash: echo "This is Linux ${CMAKE_BUILD_TYPE}"
-      - bash: mkdir build && cd build
-      - bash: cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -G "Unix Makefiles" ../native
-      - bash: make
+      - bash: .azure-pipelines/build-unix.sh
   - stage: build_java
     jobs:
     - job: build_java
