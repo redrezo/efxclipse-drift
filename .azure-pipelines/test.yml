@@ -23,7 +23,19 @@ stages:
           configuration: $(CMAKE_BUILD_TYPE)
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: build/$(CMAKE_BUILD_TYPE)/driftfx.dll
+          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.dll
+          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.lib
+          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.pdb
+          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/samples/$(CMAKE_BUILD_TYPE)/samples.dll
           ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
     - job: build_macos_natives
       displayName: MacOS
@@ -41,6 +53,10 @@ stages:
         inputs:
           PathtoPublish: build/DriftFX/libdriftfx.dylib
           ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/samples.dylib
+          ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
     - job: build_linux_natives
       displayName: Linux
       pool:
@@ -57,9 +73,37 @@ stages:
         inputs:
           PathtoPublish: build/DriftFX/libdriftfx.so
           ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/samples.so
+          ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
   - stage: build_java
     jobs:
     - job: build_java
       steps:
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'linux_Debug'
+         downloadPath: 'artifacts/linux/Debug/'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'linux_Release'
+         downloadPath: 'artifacts/linux/Release/'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'win32_Debug'
+         downloadPath: 'artifacts/win32/Debug/'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'win32_Release'
+         downloadPath: 'artifacts/win32/Release/'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'macos_Debug'
+         downloadPath: 'artifacts/macos/Debug/'
+      - task: DownloadBuildArtifacts@0
+        inputs:
+         artifactName: 'macos_Release'
+         downloadPath: 'artifacts/macos/Release/'
       - bash: mvn --batch-mode clean package
 
