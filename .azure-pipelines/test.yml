@@ -1,10 +1,15 @@
 
 stages:
   - stage: build_natives
+    name: Natives
     jobs:
     - job: build_win32_natives
+      name: Win32
       pool:
         vmImage: 'windows-2019'
+        demands:
+        - msbuild
+        - visualstudio
       strategy:
         matrix:
           Debug:
@@ -17,6 +22,7 @@ stages:
       - bash: choco install visualstudio2017-workload-nativedesktop
       - bash: '.azure-pipelines/build-win32.sh'
     - job: build_macos_natives
+      name: MacOS
       pool:
         vmImage: 'macOS-10.14'
       strategy:
@@ -28,6 +34,7 @@ stages:
       steps:
       - bash: .azure-pipelines/build-unix.sh
     - job: build_linux_natives
+      name: Linux
       pool:
         vmImage: 'ubuntu-16.04'
       strategy:
