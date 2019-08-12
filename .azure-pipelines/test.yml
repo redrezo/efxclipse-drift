@@ -20,7 +20,7 @@ stages:
       - task: MSBuild@1
         inputs:
           solution: build/releng.sln
-          configuration: ${CMAKE_BUILD_TYPE}
+          configuration: $(CMAKE_BUILD_TYPE)
     - job: build_macos_natives
       displayName: MacOS
       pool:
