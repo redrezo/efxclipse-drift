@@ -55,7 +55,7 @@ stages:
           ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: build/DriftFX/samples.dylib
+          PathtoPublish: build/samples/samples.dylib
           ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
     - job: build_linux_natives
       displayName: Linux
@@ -75,7 +75,7 @@ stages:
           ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: build/DriftFX/samples.so
+          PathtoPublish: build/samples/samples.so
           ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
   - stage: build_java
     jobs:
