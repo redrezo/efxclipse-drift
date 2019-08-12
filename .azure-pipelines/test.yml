@@ -118,7 +118,9 @@ stages:
     - job: build_java
       steps:
       - bash: curl -s https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64.tar.gz --output jdk.tar.gz
+        displayName: 'Downloading JDK 8u222 with JavaFX'
       - task: JavaToolInstaller@0
+        displayName: 'Setting up JDK'
         inputs:
           versionSpec: '8'
           jdkArchitectureOption: 'x64'
