@@ -7,9 +7,6 @@ stages:
       displayName: Win32
       pool:
         vmImage: 'windows-2019'
-        demands:
-        - msbuild
-        - visualstudio
       strategy:
         matrix:
           Debug:
@@ -18,6 +15,10 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
       - bash: '.azure-pipelines/build-win32.sh'
+      - task: MSBuild@1
+        inputs:
+          solution: build/releng.sln
+          configuration: ${CMAKE_BUILD_TYPE}
     - job: build_macos_natives
       displayName: MacOS
       pool:
