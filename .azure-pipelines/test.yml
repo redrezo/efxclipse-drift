@@ -21,6 +21,10 @@ stages:
         inputs:
           solution: build/releng.sln
           configuration: $(CMAKE_BUILD_TYPE)
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/$(CMAKE_BUILD_TYPE)/driftfx.dll
+          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
     - job: build_macos_natives
       displayName: MacOS
       pool:
@@ -33,6 +37,10 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
       - bash: .azure-pipelines/build-unix.sh
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/libdriftfx.dylib
+          ArtifactName: 'macos_$(CMAKE_BUILD_TYPE)'
     - job: build_linux_natives
       displayName: Linux
       pool:
@@ -45,9 +53,13 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
       - bash: .azure-pipelines/build-unix.sh
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: build/DriftFX/libdriftfx.so
+          ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
   - stage: build_java
     jobs:
     - job: build_java
       steps:
-      - bash: mvn package
+      - bash: mvn --batch-mode clean package
 
