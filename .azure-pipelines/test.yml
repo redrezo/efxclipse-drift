@@ -126,7 +126,7 @@ stages:
             cp artifacts/macos_Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
             cp artifacts/linux_Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
             cp artifacts/linux_Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
-            cp artifacts/win32_Debug/samples.dll org.eclispe.fx.drift.samples/native/
+            cp artifacts/win32_Debug/samples.dll org.eclipse.fx.drift.samples/native/
             cp artifacts/macos_Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
             cp artifacts/linux_Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: Maven@3
