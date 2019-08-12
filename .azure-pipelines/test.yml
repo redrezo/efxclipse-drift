@@ -160,6 +160,5 @@ stages:
           publishDirectory: 'dist'
           feedsToUsePublish: 'internal'
           vstsFeedPublish: 'fdb4ce06-5bd6-47b3-ac78-d72cf66c9692'
-          versionOption: 'custom'
-          versionPublish: '$(Build.SourceVersion)'
+          versionOption: 'patch'
       
