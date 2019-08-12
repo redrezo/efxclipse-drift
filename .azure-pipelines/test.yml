@@ -141,7 +141,7 @@ stages:
           script: |
             mkdir dist
             zip -r dist/sources.zip native org.eclipse.fx.drift org.eclipse.fx.drift.feature org.eclipse.fx.drift.samples org.eclipse.fx.drift.samples.feature
-            echo "$(Build.SourceVersion" > dist/git_commit
+            echo "$(Build.SourceVersion)" > dist/git_commit
             mkdir dist/include
             cp -R native/DriftFX/include/* dist/include/
             mkdir dist/libs
