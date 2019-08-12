@@ -107,8 +107,11 @@ stages:
          artifactName: 'macos_Release'
          downloadPath: 'artifacts/macos/Release/'
       - bash: mvn -version
+      - bash: curl -s https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64.tar.gz --output jdk.targ.gz
+      - bash: tar xvzf jdk.tar.gz
       - task: Maven@3
         inputs:
+          jdkDirectory: './jdk'
           mavenPomFile: 'pom.xml'
           options: '--batch-mode'
           goals: 'clean package'
