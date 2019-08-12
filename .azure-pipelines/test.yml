@@ -82,6 +82,15 @@ stages:
     jobs:
     - job: build_java
       steps:
+      - bash: curl -s https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64.tar.gz --output jdk.tar.gz
+      - task: JavaToolInstaller@0
+        inputs:
+          versionSpec: '8'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: 'LocalDirectory'
+          jdkFile: 'jdk.tar.gz'
+          jdkDestinationDirectory: '/builds/binaries/externals'
+          cleanDestinationDirectory: true
       - task: DownloadBuildArtifacts@0
         inputs:
          artifactName: 'linux_Debug'
@@ -106,21 +115,43 @@ stages:
         inputs:
          artifactName: 'macos_Release'
          downloadPath: 'artifacts/macos/Release/'
-      - bash: mvn -version
-      - bash: curl -s https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64.tar.gz --output jdk.tar.gz
-      - task: JavaToolInstaller@0
+      - task: Bash@3
         inputs:
-          versionSpec: '8'
-          jdkArchitectureOption: 'x64'
-          jdkSourceOption: 'LocalDirectory'
-          jdkFile: 'jdk.tar.gz'
-          jdkDestinationDirectory: '/builds/binaries/externals'
-          cleanDestinationDirectory: true
-      - bash: echo $JAVA_HOME
-      - bash: ls -al $JAVA_HOME
+          targetType: 'inline'
+          script: |
+            # copy artifacts
+            cp artifacts/win32/Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
+            cp artifacts/win32/Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
+            cp artifacts/macos/Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
+            cp artifacts/macos/Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
+            cp artifacts/linux/Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
+            cp artifacts/linux/Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
+            cp artifacts/win32/Debug/samples.dll org.eclispe.fx.drift.samples/native/
+            cp artifacts/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
+            cp artifacts/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
           options: '--batch-mode'
           goals: 'clean package'
           mavenVersionOption: 'Default'
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            mkdir dist
+            zip -r dist/sources.zip native org.eclipse.fx.drift org.eclipse.fx.drift.feature org.eclipse.fx.drift.samples org.eclipse.fx.drift.samples.feature
+            echo "$(Build.SourceVersion" > dist/git_commit
+            mkdir dist/include
+            cp -R native/DriftFX/include/* dist/include/
+            mkdir dist/libs
+            cp -R artifacts/* dist/libs/
+            zip -r dist.zip dist/*
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: dist.zip
+          ArtifactName: driftfx
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: org.eclipse.fx.drift.updatesite/target/org.eclipse.fx.drift.updatesite-0.1.0-SNAPSHOT.zip
+          ArtifactName: driftfx
