@@ -33,7 +33,7 @@ stages:
             cp build/samples/$(CMAKE_BUILD_TYPE)/samples.dll artifacts/win32/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: 'artifacts/*'
+          PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
@@ -74,7 +74,7 @@ stages:
             cp build/samples/libsamples.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: 'artifacts/*'
+          PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
@@ -106,7 +106,7 @@ stages:
             cp build/samples/libsamples.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
         inputs:
-          PathtoPublish: 'artifacts/*'
+          PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
       - task: PublishBuildArtifacts@1
         inputs:
