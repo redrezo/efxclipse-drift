@@ -12,10 +12,9 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
-      - bash: echo "This is Win32 ${CMAKE_BUILD_TYPE}"
-      - bash: mkdir build && cd build
-      - bash: cmake -G "Visual Studio 15 2017 Win64" ../native
-      - bash: msbuild /property:Configuration=${CMAKE_BUILD_TYPE} releng.sln
+      - bash:
+        workingDirectory: '.'
+        scriptPath: '.azure-pipeline/build-win32.sh'
     - job: build_macos_natives
       pool:
         vmImage: 'macOS-10.14'
