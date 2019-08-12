@@ -22,7 +22,7 @@ stages:
           solution: build/releng.sln
           configuration: $(CMAKE_BUILD_TYPE)
       - task: Bash@3
-        displayName: 'Prepare Build artifacts'
+        displayName: 'Prepare artifacts'
         inputs:
           targetType: 'inline'
           script: |
@@ -32,26 +32,10 @@ stages:
             [[ "$(CMAKE_BUILD_TYPE)" == "Debug" ]] && cp build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.pdb artifacts/win32/$(CMAKE_BUILD_TYPE)/
             cp build/samples/$(CMAKE_BUILD_TYPE)/samples.dll artifacts/win32/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
+        displayName: 'Upload artifacts'
         inputs:
           PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.dll
-          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.lib
-          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
-      - task: PublishBuildArtifacts@1
-        condition: eq(variables['CMAKE_BUILD_TYPE'], 'Debug')
-        inputs:
-          PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.pdb
-          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/samples/$(CMAKE_BUILD_TYPE)/samples.dll
-          ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
     - job: build_macos_natives
       displayName: MacOS
       pool:
@@ -64,8 +48,9 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps:
       - bash: .azure-pipelines/build-unix.sh
+        displayName: 'Build natives'
       - task: Bash@3
-        displayName: 'Prepare Build artifacts'
+        displayName: 'Prepare artifacts'
         inputs:
           targetType: 'inline'
           script: |
@@ -73,6 +58,7 @@ stages:
             cp build/DriftFX/libdriftfx.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
             cp build/samples/libsamples.dylib artifacts/macos/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
+        displayName: 'Upload artifacts'
         inputs:
           PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
@@ -96,29 +82,25 @@ stages:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
       - bash: .azure-pipelines/build-unix.sh
+        displayName: 'Build natives'
       - task: Bash@3
-        displayName: 'Prepare Build artifacts'
+        displayName: 'Prepare artifacts'
         inputs:
           targetType: 'inline'
           script: |
-            mkdir -p artifacts/macos/$(CMAKE_BUILD_TYPE)
-            cp build/DriftFX/libdriftfx.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
-            cp build/samples/libsamples.so artifacts/macos/$(CMAKE_BUILD_TYPE)/
+            mkdir -p artifacts/linux/$(CMAKE_BUILD_TYPE)
+            cp build/DriftFX/libdriftfx.so artifacts/linux/$(CMAKE_BUILD_TYPE)/
+            cp build/samples/libsamples.so artifacts/linux/$(CMAKE_BUILD_TYPE)/
       - task: PublishBuildArtifacts@1
+        displayName: 'Upload artifacts'
         inputs:
           PathtoPublish: 'artifacts'
           ArtifactName: 'driftfx_natives'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/DriftFX/libdriftfx.so
-          ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: build/samples/libsamples.so
-          ArtifactName: 'linux_$(CMAKE_BUILD_TYPE)'
   - stage: build_java
+    displayName: 'Maven Build'
     jobs:
     - job: build_java
+      displayName: 'Maven Build'
       steps:
       - bash: curl -s https://cdn.azul.com/zulu/bin/zulu8.40.0.25-ca-fx-jdk8.0.222-linux_x64.tar.gz --output jdk.tar.gz
         displayName: 'Downloading JDK 8u222 with JavaFX'
@@ -132,43 +114,24 @@ stages:
           jdkDestinationDirectory: '/builds/binaries/externals'
           cleanDestinationDirectory: true
       - task: DownloadBuildArtifacts@0
+        displayName: 'Download artifacts'
         inputs:
-         artifactName: 'linux_Debug'
-         downloadPath: 'artifacts/'
-      - task: DownloadBuildArtifacts@0
-        inputs:
-         artifactName: 'linux_Release'
-         downloadPath: 'artifacts/'
-      - task: DownloadBuildArtifacts@0
-        inputs:
-         artifactName: 'win32_Debug'
-         downloadPath: 'artifacts/'
-      - task: DownloadBuildArtifacts@0
-        inputs:
-         artifactName: 'win32_Release'
-         downloadPath: 'artifacts/'
-      - task: DownloadBuildArtifacts@0
-        inputs:
-         artifactName: 'macos_Debug'
-         downloadPath: 'artifacts/'
-      - task: DownloadBuildArtifacts@0
-        inputs:
-         artifactName: 'macos_Release'
-         downloadPath: 'artifacts/'
+          artifactName: 'driftfx_natives'
+          downloadPath: 'artifacts/'
       - task: Bash@3
         inputs:
           targetType: 'inline'
           script: |
             # copy artifacts
-            cp artifacts/win32_Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
-            cp artifacts/win32_Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
-            cp artifacts/macos_Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
-            cp artifacts/macos_Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
-            cp artifacts/linux_Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
-            cp artifacts/linux_Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
-            cp artifacts/win32_Debug/samples.dll org.eclipse.fx.drift.samples/native/
-            cp artifacts/macos_Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
-            cp artifacts/linux_Debug/libsamples.so org.eclipse.fx.drift.samples/native/
+            cp artifacts/win32/Debug/driftfx.dll org.eclipse.fx.drift.native.win32.debug/native/
+            cp artifacts/win32/Release/driftfx.dll org.eclipse.fx.drift.native.win32/native/
+            cp artifacts/macos/Debug/libdriftfx.dylib org.eclipse.fx.drift.native.macos.debug/native/
+            cp artifacts/macos/Release/libdriftfx.dylib org.eclipse.fx.drift.native.macos/native/
+            cp artifacts/linux/Debug/libdriftfx.so org.eclipse.fx.drift.native.linux.debug/native/
+            cp artifacts/linux/Release/libdriftfx.so org.eclipse.fx.drift.native.linux/native/
+            cp artifacts/win32/Debug/samples.dll org.eclipse.fx.drift.samples/native/
+            cp artifacts/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
+            cp artifacts/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
