@@ -109,7 +109,7 @@ stages:
         displayName: 'Download artifacts'
         inputs:
           artifactName: 'driftfx_natives'
-          downloadPath: 'artifacts/'
+          downloadPath: 'artifacts'
       - task: Bash@3
         inputs:
           targetType: 'inline'
