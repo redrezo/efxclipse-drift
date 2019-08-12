@@ -12,6 +12,9 @@ stages:
           Release:
             CMAKE_BUILD_TYPE: 'Release'
       steps: 
+      - bash: choco install visualstudio2017buildtools
+      - bash: choco install visualstudio2017-workload-vctools
+      - bash: choco install visualstudio2017-workload-nativedesktop
       - bash: '.azure-pipelines/build-win32.sh'
     - job: build_macos_natives
       pool:
