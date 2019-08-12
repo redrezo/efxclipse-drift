@@ -30,6 +30,7 @@ stages:
           PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.lib
           ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
       - task: PublishBuildArtifacts@1
+        condition: eq(variables['CMAKE_BUILD_TYPE'], 'Debug')
         inputs:
           PathtoPublish: build/DriftFX/$(CMAKE_BUILD_TYPE)/driftfx.pdb
           ArtifactName: 'win32_$(CMAKE_BUILD_TYPE)'
