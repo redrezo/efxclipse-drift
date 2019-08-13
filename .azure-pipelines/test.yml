@@ -124,12 +124,20 @@ stages:
             cp -v artifacts/driftfx_natives/win32/Debug/samples.dll org.eclipse.fx.drift.samples/native/
             cp -v artifacts/driftfx_natives/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
             cp -v artifacts/driftfx_natives/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
+      - task: DownloadSecureFile@1
+        inputs:
+          secureFile: 'settings.xml'
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
           options: '--batch-mode'
           goals: 'clean package'
           mavenVersionOption: 'Default'
+      - task: Bash@3
+        inputs:
+          script: |
+            mkdir ~/.m2
+            mv -v settings.xml ~/.m2/settings.xml
       - task: Bash@3
         inputs:
           targetType: 'inline'
