@@ -125,18 +125,14 @@ stages:
             cp -v artifacts/driftfx_natives/macos/Debug/libsamples.dylib org.eclipse.fx.drift.samples/native/
             cp -v artifacts/driftfx_natives/linux/Debug/libsamples.so org.eclipse.fx.drift.samples/native/
       - task: DownloadSecureFile@1
+        displayName: 'Prepare maven settings'
+        name: settings_xml
         inputs:
           secureFile: 'settings.xml'
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            mkdir ~/.m2
-            cp -v $(Agent.TempDirectory)/settings.xml ~/.m2/settings.xml
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
-          options: '--batch-mode -P azure'
+          options: '--settings $(settings_xml.secureFilePath) --batch-mode -P azure'
           goals: 'clean package deploy'
           mavenVersionOption: 'Default'
       - task: Bash@3
