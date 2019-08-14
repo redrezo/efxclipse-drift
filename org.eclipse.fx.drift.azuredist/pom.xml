@@ -77,7 +77,7 @@
 		        <version>1.7</version>
 		        <executions>
 		          <execution>
-		            <id>regex-property</id>
+		            <id>regex-property1</id>
 		            <goals>
 		              <goal>regex-property</goal>
 		            </goals>
@@ -90,7 +90,7 @@
 		            </configuration>
 		          </execution>
 		          <execution>
-		            <id>regex-property</id>
+		            <id>regex-property2</id>
 		            <goals>
 		              <goal>regex-property</goal>
 		            </goals>
