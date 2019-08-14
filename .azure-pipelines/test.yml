@@ -127,18 +127,18 @@ stages:
       - task: DownloadSecureFile@1
         inputs:
           secureFile: 'settings.xml'
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            mkdir ~/.m2
+            cp -v $(Agent.TempDirectory)/settings.xml ~/.m2/settings.xml
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
           options: '--batch-mode'
           goals: 'clean package'
           mavenVersionOption: 'Default'
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            mkdir ~/.m2
-            mv -v settings.xml ~/.m2/settings.xml
       - task: Bash@3
         inputs:
           targetType: 'inline'
