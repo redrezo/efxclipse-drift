@@ -136,8 +136,8 @@ stages:
       - task: Maven@3
         inputs:
           mavenPomFile: 'pom.xml'
-          options: '--batch-mode'
-          goals: 'clean package'
+          options: '--batch-mode -P azure'
+          goals: 'clean package deploy'
           mavenVersionOption: 'Default'
       - task: Bash@3
         inputs:
