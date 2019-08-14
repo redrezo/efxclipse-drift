@@ -71,12 +71,59 @@
 	  		<id>azure</id>
 	  		<build>
 	  		  <plugins>
+	  		   <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>build-helper-maven-plugin</artifactId>
+		        <version>1.7</version>
+		        <executions>
+		          <execution>
+		            <id>regex-property</id>
+		            <goals>
+		              <goal>regex-property</goal>
+		            </goals>
+		            <configuration>
+		              <name>build.number</name>
+		              <value>${env.BUILD_BUILDNUMBER}</value>
+		              <regex>^.*[.]([0-9]+)$</regex>
+		              <replacement>$1</replacement>
+		              <failIfNoMatch>true</failIfNoMatch>
+		            </configuration>
+		          </execution>
+		          <execution>
+		            <id>regex-property</id>
+		            <goals>
+		              <goal>regex-property</goal>
+		            </goals>
+		            <configuration>
+		              <name>branch.name</name>
+		              <value>${env.BUILD_BUILDNUMBER}</value>
+		              <regex>^(.*)[.][0-9]+$</regex>
+		              <replacement>$1</replacement>
+		              <failIfNoMatch>true</failIfNoMatch>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
 		      <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<configuration>
-						<skip>false</skip>
-					</configuration>
+					<executions>
+						<execution>
+							<phase>deploy</phase>
+							<goals>
+								<goal>deploy-file</goal>
+							</goals>
+							<configuration>
+								<repositoryId>dev-azure-com-redrezo-drift</repositoryId>
+								<url>https://pkgs.dev.azure.com/redrezo/efxclipse-drift/_packaging/drift/maven/v1</url>
+								<file>target/drift-${project.version}.zip</file>
+								<groupId>org.eclipse.fx.drift</groupId>
+								<artifactId>dist-unsigned-${branch.name}</artifactId>
+								<version>0.0.${build.number}</version>
+								<packaging>zip</packaging>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 			  </plugins>
 	  		</build>
