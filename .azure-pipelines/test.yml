@@ -1,4 +1,4 @@
-
+name: $(Rev:.r)
 stages:
   - stage: build_natives
     displayName: Natives
