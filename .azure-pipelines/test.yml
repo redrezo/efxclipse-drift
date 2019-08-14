@@ -1,4 +1,4 @@
-name: $(Rev:r)
+name: $(Build.SourceBranchName).$(Rev:r)
 stages:
   - stage: build_natives
     displayName: Natives
