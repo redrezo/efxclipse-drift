@@ -1,5 +1,14 @@
 name: $(Build.SourceBranchName).$(Rev:r)
 stages:
+  - stage: output
+    jobs:
+    - job: output
+      steps:
+      - bash: |
+          echo "$(Rev)"
+          echo ${Rev}
+          echo "-----"
+          env
   - stage: build_natives
     displayName: Natives
     jobs:
