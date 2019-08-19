@@ -1,4 +1,6 @@
 name: $(Build.SourceBranchName).$(Rev:r)
+variables:
+- group: Jenkins
 stages:
   - stage: output
     jobs:
@@ -145,9 +147,13 @@ stages:
           goals: 'clean package deploy'
           mavenVersionOption: 'Default'
       - task: Bash@3
+        env:
+          WEBHOOK_URL: $(Webhook.Url)
+          WEBHOOK_TOKEN: $(Webhook.Token)
         inputs:
          targetType: inline
+
          script: |
-           echo "$WEBHOOK_URL/buildWithParameters?token=xxx&BUILD_NUMBER=$REV&BRANCH_NAME=$(Build.SourceBranchName)"
-           STATUS=`curl -v -w "%{http_code}" "$WEBHOOK_URL/buildWithParameters?token=$WEBHOOK_TOKEN&BUILD_NUMBER=$REV&BRANCH_NAME=$(Build.SourceBranchName)"`
+           echo "$WEBHOOK_URL/buildWithParameters?token=xxx&BUILD_NUMBER=$(Rev)&BRANCH_NAME=$(Build.SourceBranchName)"
+           STATUS=`curl -v -w "%{http_code}" "$WEBHOOK_URL/buildWithParameters?token=$WEBHOOK_TOKEN&BUILD_NUMBER=$(Rev)&BRANCH_NAME=$(Build.SourceBranchName)"`
            echo 'Triggered Jenkins: $STATUS'
