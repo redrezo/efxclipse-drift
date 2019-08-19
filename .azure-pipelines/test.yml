@@ -148,5 +148,5 @@ stages:
         inputs:
          targetType: inline
          script: |
-           STATUS=`curl -s -w "%{http_code}" "$(Webhook.Url)/buildWithParameters?token=$(Webhook.Token)&BUILD_NUMBER=$(Rev)&BRANCH_NAME=$(Build.SourceBranchName)"`
+           STATUS=`curl -s -w "%{http_code}" "$WEBHOOK_URL/buildWithParameters?token=$WEBHOOK_TOKEN&BUILD_NUMBER=$REV&BRANCH_NAME=$(Build.SourceBranchName)"`
            echo 'Triggered Jenkins: $STATUS'
